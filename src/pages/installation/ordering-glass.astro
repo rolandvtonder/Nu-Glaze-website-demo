@@ -1,0 +1,45 @@
+---
+import {Image} from 'astro:assets';
+import Guide from '../../layouts/Guide.astro';
+import {featured} from '../../data/gallery';
+import guide from '../../assets/brand/ordering-glass-guide.jpg';
+---
+
+<Guide
+  title="Ordering Glass for Nu-Glaze — How to Measure Panes Correctly"
+  description="How to measure and order glass for Nu-Glaze glazing: tight measures, the 5 mm per side reduction, safety glass sizing and the mistakes to avoid."
+  kicker="Ordering glass"
+  lines={[{t: 'Measure twice,'}, {t: 'calculate once.', i: true}]}
+  intro="Clear instructions for measuring openings and ordering glass that fits Nu-Glaze first time."
+  image={featured.measuring}
+  crumbs={[{name: 'Installation', href: '/installation/'}, {name: 'Ordering glass', href: '/installation/ordering-glass/'}]}
+>
+  <h2>Three steps</h2>
+  <ol>
+    <li><strong>Sketch the building</strong> — a rough plan with every window and door marked and numbered (W1, W2, D1…).</li>
+    <li><strong>Draw each window or door</strong> with its panes, and write the tight measure (inside frame dimension) of every pane. Label each pane (W1P1, W1P2…) so the glass can be stickered.</li>
+    <li><strong>Ask for arrised edges</strong> — the glass edges lightly sanded so they're safe to handle and less likely to crack.</li>
+  </ol>
+
+  <h2>How much smaller should the glass be?</h2>
+  <table>
+    <thead><tr><th scope="col">Glass</th><th scope="col">Reduction</th></tr></thead>
+    <tbody>
+      <tr><td>3–4 mm glass</td><td>5 mm smaller per side — 10 mm off the width and 10 mm off the height.</td></tr>
+      <tr><td>5–6.38 mm safety glass larger than 400 × 600 mm</td><td>7 mm off the height only (3–4 mm top and bottom). Heavy panes sit deeper in the bottom groove; if a gap forms at the top, insert a spacer.</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Example:</strong> a pane with a 300 mm tight width and 238 mm tight height needs 3 mm glass cut at 290 × 228 mm.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li>Ordering glass the same size as the frame opening.</li>
+    <li>Using one reduction for every glass thickness.</li>
+    <li>Not labelling panes — and then trying to work out which one goes where on site.</li>
+  </ul>
+
+  <figure>
+    <Image src={guide} alt="Nu-Glaze ordering glass measurement guide with a house plan sketch, pane diagram and order list example" widths={[700, 1241]} sizes="(min-width:1024px) 60vw, 100vw" class="w-full border border-line bg-white" />
+    <figcaption class="caps mt-3 text-ink/55">The printable ordering-glass guide</figcaption>
+  </figure>
+</Guide>

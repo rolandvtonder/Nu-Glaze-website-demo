@@ -1,0 +1,120 @@
+---
+import {Image} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import {featured, photo} from '../data/gallery';
+import {site} from '../data/site';
+
+const timeline = [
+  {y: '1998–2007', t: 'The idea', d: 'After replacing failing clay putty and wood beading on the same windows three times, Johan Otto sets out to design something better. A concept patent is filed with international coverage.'},
+  {y: '2010', t: 'A partner joins', d: 'Costi Buccimazza comes on board as a partner to help take Nu-Glaze to market.'},
+  {y: '2012', t: 'First installations', d: 'The first commercial installation, on affordable housing in Vryheid, KwaZulu-Natal — and a DIY project in Langebaan, less than 200 m from the sea.'},
+  {y: '2015+', t: 'Across borders', d: 'Projects in the UK, USA, Australasia, Europe and several African countries, including heritage buildings — among them a 300-year-old building in Franschhoek.'},
+  {y: 'Today', t: 'Training installers', d: 'The Reach & Teach programme trains community members to install Nu-Glaze and run their own glazing businesses.'},
+];
+
+const countries = ['South Africa', 'United Kingdom', 'United States', 'Australia', 'New Zealand', 'Kenya', 'Malawi', 'Zimbabwe'];
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.owner,
+  jobTitle: 'Inventor and owner',
+  worksFor: {'@id': `${site.url}/#business`},
+};
+---
+
+<Base
+  title="About Nu-Glaze — Innovating Window Glazing Since 2007"
+  description="The story of Nu-Glaze: invented by Johan Otto after re-glazing the same windows three times, patented internationally and installed in 8+ countries since 2012."
+  crumbs={[{name: 'About', href: '/about/'}]}
+  schema={[person]}
+>
+  <PageHero
+    kicker="About Nu-Glaze"
+    lines={[{t: 'Born from'}, {t: 'three failed', i: true}, {t: 'repairs.'}]}
+    intro="Nu-Glaze started with one frustrated home-owner and a simple question: why does window glazing need redoing every few years?"
+    image={featured.heritage}
+    crumbs={[{name: 'About', href: '/about/'}]}
+  />
+
+  <section class="bg-paper">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-2 lg:gap-24">
+      <div>
+        <p class="caps text-red" data-reveal>The story</p>
+        <h2 class="display mt-5 text-[clamp(44px,5.4vw,92px)]" data-reveal><span class="block">Hard, workable,</span><span class="it block text-steel">non-metallic.</span></h2>
+        <div class="mt-8 max-w-[58ch] space-y-5 text-[18px] text-ink/80" data-reveal>
+          <p>Johan Otto had replaced the clay putty and wood beading on his windows three times when he decided there had to be a better way. He wanted a material that was hard but workable, wasn't metal, and could bridge the 90° joint between glass and frame with a neat 45° slope — at a cost that competed with putty.</p>
+          <p>The result is Nu-Glaze®: a patented uPVC clip-in profile, bonded with construction-grade neutral-cure silicone and finished with siliconized acrylic. It works on steel, timber, concrete and polycrete frames, and complies with SANS 10400-XA and SANS 613, where it achieved an A3 rating.</p>
+          <p>Nu-Glaze is based in {site.locality} on the West Coast, with a dedicated contact for KwaZulu-Natal, and supplies installers, contractors and home-owners across South Africa and abroad.</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-[3px] self-start">
+        <Image src={featured.installer.img} alt={featured.installer.alt} widths={[400, 700]} sizes="(min-width:1024px) 22vw, 50vw" class="aspect-[3/4] w-full object-cover" data-reveal />
+        <Image src={photo(198)} alt="Two members of the Nu-Glaze team smiling in front of a row of newly glazed bay windows" widths={[400, 700]} sizes="(min-width:1024px) 22vw, 50vw" class="mt-16 aspect-[3/4] w-full object-cover" data-reveal style="--d:.1s" />
+        <Image src={featured.capeDutch.img} alt={featured.capeDutch.alt} widths={[700, 1200]} sizes="(min-width:1024px) 45vw, 100vw" class="col-span-2 aspect-[16/9] w-full object-cover" data-reveal />
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="on-dark bg-ink text-white" aria-labelledby="tl-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <h2 id="tl-title" class="display text-[clamp(44px,5.6vw,96px)]" data-reveal><span class="block">From patent</span><span class="it block text-glass">to eight countries.</span></h2>
+      <ol class="mt-16 grid gap-px bg-white/15 md:grid-cols-5">
+        {
+          timeline.map((e, i) => (
+            <li class="bg-ink p-7 md:pt-10" data-reveal style={`--d:${i * 0.07}s`}>
+              <span class="display text-[clamp(34px,3vw,50px)] text-red">{e.y}</span>
+              <h3 class="display mt-4 text-[24px]">{e.t}</h3>
+              <p class="mt-3 text-[15px] text-white/70">{e.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Reach -->
+  <section class="bg-stone" aria-labelledby="reach-title">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-2">
+      <div>
+        <h2 id="reach-title" class="display text-[clamp(44px,5.6vw,96px)]" data-reveal><span class="block">Where you'll</span><span class="it block text-red">find it.</span></h2>
+        <ul class="mt-10 flex flex-wrap gap-2" data-reveal>
+          {countries.map((c) => <li class="border border-ink/20 px-4 py-2">{c}</li>)}
+        </ul>
+        <p class="mt-8 max-w-[54ch] text-ink/80" data-reveal>Plus projects across Europe. In South Africa, Nu-Glaze is on homes, schools, offices, heritage sites and a correctional facility — from Vryheid in KwaZulu-Natal to Langebaan and Franschhoek in the Western Cape.</p>
+      </div>
+      <dl class="grid grid-cols-2 gap-px self-start bg-line">
+        {
+          [
+            ['15+', 'Years of development and installation'],
+            ['8+', 'Countries with Nu-Glaze installations'],
+            ['100%', 'Of the original frame kept in service'],
+            ['A3', 'SANS 613 rating'],
+          ].map(([n, l], i) => (
+            <div class="flex flex-col-reverse justify-end bg-stone p-8" data-reveal style={`--d:${i * 0.06}s`}>
+              <dt class="mt-2 text-ink/70">{l}</dt>
+              <dd class="display text-[clamp(48px,5vw,84px)]">{n}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Future -->
+  <section class="bg-paper">
+    <div class="mx-auto grid max-w-[1680px] gap-10 px-5 py-24 md:px-14 lg:grid-cols-2 lg:items-center">
+      <div data-reveal>
+        <p class="caps text-red">What's next</p>
+        <h2 class="display mt-4 text-[clamp(40px,4.6vw,76px)]"><span class="block">Double glazing</span><span class="it block text-steel">is already patented.</span></h2>
+        <p class="mt-6 max-w-[54ch] text-ink/80">Profiles for double-glazed units and further shapes are patented and in development. In the meantime, thick glass and existing double-glazed units can be fitted with a "deconstructed" full install — see the <a href="/faq/#thick-glass" class="text-red underline underline-offset-4">FAQ</a>.</p>
+      </div>
+      <div class="flex flex-wrap gap-3 lg:justify-end" data-reveal>
+        <a href="/products/" class="btn btn-red">See the range</a>
+        <a href="/reach-and-teach/" class="btn btn-ghost">Reach & Teach</a>
+      </div>
+    </div>
+  </section>
+</Base>

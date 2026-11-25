@@ -1,0 +1,57 @@
+---
+import {Image} from 'astro:assets';
+import Guide from '../../layouts/Guide.astro';
+import {photo} from '../../data/gallery';
+import guide from '../../assets/brand/glass-breaks-guide.jpg';
+
+const steps = [
+  ['Put on PPE', 'Cut-resistant gloves, safety goggles, long sleeves and closed shoes.'],
+  ['Remove the shards', 'Take broken pieces out one at a time and dispose of them safely.'],
+  ['Cut the silicone bond', 'Run a utility blade between the profile and the frame, repeatedly, until the bond is cut.'],
+  ['Release the profile', 'Start with the top piece, then the sides, then the bottom — the reverse of installation. Don’t bend profiles you want to reuse.'],
+  ['Scrape out old silicone', 'Use a 3–4 mm flat screwdriver inside the profile, and a scraper or silicone remover on the frame.'],
+  ['Clean the frame', 'Prepare it exactly as you would for a normal installation.'],
+  ['Reuse the profiles', 'Undamaged profiles go back in with the new glass and fresh silicone.'],
+];
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'What to do if glass glazed with Nu-Glaze breaks',
+  tool: ['Cut-resistant gloves', 'Safety goggles', 'Utility knife', '3–4 mm flat-head screwdriver'].map((name) => ({'@type': 'HowToTool', name})),
+  step: steps.map(([name, text]) => ({'@type': 'HowToStep', name, text})),
+};
+---
+
+<Guide
+  title="What to Do If the Glass Breaks — Replacing Glass Glazed with Nu-Glaze"
+  description="Broken a pane glazed with Nu-Glaze? How to safely remove the glass, release and clean the profiles, and reuse them with new glass."
+  kicker="Emergency guide"
+  lines={[{t: 'Broken pane?'}, {t: 'Keep the profile.', i: true}]}
+  intro="Nu-Glaze profiles can usually be removed, cleaned and reused — here's how to do it safely."
+  image={{img: photo(77), alt: 'Close-up of an old window frame being prepared for new glass'}}
+  crumbs={[{name: 'Installation', href: '/installation/'}, {name: 'If the glass breaks', href: '/installation/glass-breaks/'}]}
+  schema={[howTo]}
+>
+  <h2>Seven steps</h2>
+  <ol>{steps.map(([t, d]) => <li><strong>{t}.</strong> {d}</li>)}</ol>
+
+  <h3>Tools you'll need</h3>
+  <ul>
+    <li>Cut-resistant gloves and safety goggles</li>
+    <li>Utility knife</li>
+    <li>3–4 mm flat-head screwdriver</li>
+    <li>Scraper or silicone remover</li>
+  </ul>
+
+  <h2>Glass thicker than 7 mm</h2>
+  <p>Use the S7 profile. Insert it into the base channel at an angle, stand the glass up vertically into the channel, then run a continuous 3 mm (⅛") silicone bead to seal it. Check the pane is level and let the silicone cure as the manufacturer specifies.</p>
+
+  <h2>What if only the outer face of the profile is damaged?</h2>
+  <p>The outer face takes real force to break, and even then the inner structure and silicone keep holding the glass. Damage can be plastic-welded, or that section replaced using the <a href="/installation/#frontal">frontal method</a>.</p>
+
+  <figure>
+    <Image src={guide} alt="Printable Nu-Glaze guide: what to do if the glass breaks, with illustrated steps" widths={[700, 1241]} sizes="(min-width:1024px) 60vw, 100vw" class="w-full border border-line bg-white" />
+    <figcaption class="caps mt-3 text-ink/55">The printable glass-breakage guide</figcaption>
+  </figure>
+</Guide>

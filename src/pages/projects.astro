@@ -1,0 +1,97 @@
+---
+import {Image, getImage} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import {categories, featured, gallery} from '../data/gallery';
+import {site} from '../data/site';
+
+// Thumbnails go through <Image>; the lightbox loads a larger WebP on demand.
+const items = await Promise.all(gallery.map(async (g) => ({...g, full: (await getImage({src: g.img, width: 1600, format: 'webp'})).src})));
+const counts = Object.fromEntries(categories.map((c) => [c.id, gallery.filter((g) => g.cat === c.id).length]));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: 'Nu-Glaze projects gallery',
+  description: 'Photos of steel, timber and heritage windows glazed with Nu-Glaze across South Africa.',
+  author: {'@id': `${site.url}/#business`},
+};
+---
+
+<Base
+  title="Projects Gallery — Nu-Glaze on Steel, Timber & Heritage Windows"
+  description="Over 200 photos of real Nu-Glaze jobs: steel windows and doors, restored timber frames, heritage buildings, before-and-after putty replacements and our installers at work."
+  crumbs={[{name: 'Projects', href: '/projects/'}]}
+  schema={[schema]}
+>
+  <PageHero
+    kicker="Projects"
+    lines={[{t: 'Real windows.'}, {t: 'Real jobs.', i: true}]}
+    intro="Homes, heritage buildings, offices and schools glazed with Nu-Glaze — straight from the job site, unretouched."
+    image={featured.shopfront}
+    crumbs={[{name: 'Projects', href: '/projects/'}]}
+    position="center 60%"
+  />
+
+  <section class="bg-paper" aria-labelledby="gal-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-16 md:px-14 md:py-24">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <h2 id="gal-title" class="display text-[clamp(40px,4.6vw,76px)]"><span class="block">The gallery</span><span class="it block text-steel" data-count>{items.length} photos</span></h2>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter photos by category">
+          <button type="button" data-filter="all" aria-pressed="true" class="filter caps min-h-11 cursor-pointer border border-ink/25 px-4">All <span class="text-ink/45">{items.length}</span></button>
+          {
+            categories.map((c) => (
+              <button type="button" data-filter={c.id} aria-pressed="false" class="filter caps min-h-11 cursor-pointer border border-ink/25 px-4">
+                {c.label} <span class="text-ink/45">{counts[c.id]}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <ul data-gallery class="mt-12 columns-2 gap-[6px] md:columns-3 xl:columns-4">
+        {
+          items.map((g, i) => (
+            <li data-cat={g.cat} class="mb-[6px] break-inside-avoid">
+              <a href={g.full} class="group block overflow-hidden bg-stone">
+                <Image
+                  src={g.img}
+                  alt={g.alt}
+                  widths={[300, 500, 700]}
+                  sizes="(min-width:1280px) 25vw, (min-width:768px) 33vw, 50vw"
+                  loading={i < 8 ? 'eager' : 'lazy'}
+                  class="w-full transition-transform duration-700 ease-silk group-hover:scale-[1.04]"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <dialog data-lightbox aria-label="Photo viewer" class="m-0 h-dvh max-h-none w-screen max-w-none bg-ink/95 p-0 text-white backdrop:bg-ink/80">
+    <div class="flex h-full flex-col">
+      <div class="flex items-center justify-between gap-4 p-4 md:px-8">
+        <p data-cap class="caps line-clamp-2 text-white/70" aria-live="polite"></p>
+        <button type="button" data-close class="caps min-h-12 shrink-0 cursor-pointer bg-white px-5 text-ink" aria-label="Close photo viewer">Close ×</button>
+      </div>
+      <div class="relative flex min-h-0 flex-1 items-center justify-center px-4 pb-6 md:px-24">
+        <img alt="" class="max-h-full max-w-full object-contain" />
+        <button type="button" data-prev aria-label="Previous photo" class="display absolute top-1/2 left-2 min-h-14 min-w-14 -translate-y-1/2 cursor-pointer bg-white/15 text-[30px] hover:bg-white/30 md:left-6">‹</button>
+        <button type="button" data-next aria-label="Next photo" class="display absolute top-1/2 right-2 min-h-14 min-w-14 -translate-y-1/2 cursor-pointer bg-white/15 text-[30px] hover:bg-white/30 md:right-6">›</button>
+      </div>
+    </div>
+  </dialog>
+
+  <style>
+    .filter[aria-pressed='true'] {
+      background: var(--color-ink);
+      color: #fff;
+      border-color: var(--color-ink);
+    }
+    .filter[aria-pressed='true'] span {
+      color: rgb(255 255 255 / 0.6);
+    }
+  </style>
+</Base>

@@ -1,0 +1,68 @@
+---
+import {nav, secondaryNav, site} from '../data/site';
+const guides = nav.find((n) => n.href === '/installation/')!.children!;
+const year = new Date().getFullYear();
+---
+
+<footer class="on-dark relative overflow-hidden bg-ink text-white">
+  <div class="mx-auto max-w-[1680px] px-5 pt-24 pb-10 md:px-14">
+    <div class="grid gap-14 border-b border-white/15 pb-16 lg:grid-cols-[1.3fr_1fr]">
+      <div data-reveal>
+        <p class="caps text-glass">Free quotes · Mon–Fri 08:00–17:00</p>
+        <h2 class="display mt-5 text-[clamp(44px,6vw,96px)]">
+          <span class="block">Stop re-puttying.</span>
+          <span class="it block text-red">Glaze it once.</span>
+        </h2>
+        <p class="mt-6 max-w-[46ch] text-white/75">
+          Send Johan your frame type, roughly how many panes and where you are — a photo helps — and you'll hear back within one business day.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact/" class="btn btn-red">Request a quote</a>
+          <a href={site.whatsapp} class="btn btn-ghost" target="_blank" rel="noopener">WhatsApp {site.phones[0].display}</a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-10 text-[15px] sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3" data-reveal style="--d:.1s">
+        <div>
+          <p class="caps text-white/45">Explore</p>
+          <ul class="mt-4 space-y-2">
+            {nav.map((n) => <li><a href={n.href} class="text-white/80 hover:text-white">{n.label}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="caps text-white/45">Guides</p>
+          <ul class="mt-4 space-y-2">
+            <li><a href="/installation/" class="text-white/80 hover:text-white">Installation guide</a></li>
+            {guides.map((n) => <li><a href={n.href} class="text-white/80 hover:text-white">{n.label}</a></li>)}
+            {secondaryNav.slice(0, 4).map((n) => <li><a href={n.href} class="text-white/80 hover:text-white">{n.label}</a></li>)}
+          </ul>
+        </div>
+        <div class="col-span-2 sm:col-span-1 lg:col-span-2 xl:col-span-1">
+          <p class="caps text-white/45">Contact</p>
+          <address class="mt-4 space-y-2 not-italic">
+            {
+              site.phones.map((p) => (
+                <p>
+                  <a href={`tel:${p.tel}`} class="text-white/80 hover:text-white">{p.display}</a>
+                  <span class="block text-[13px] text-white/45">{p.label}</span>
+                </p>
+              ))
+            }
+            <p><a href={`mailto:${site.email}`} class="break-all text-white/80 hover:text-white">{site.email}</a></p>
+            <p class="text-white/60">{site.locality}, {site.region}<br />South Africa</p>
+            <p><a href={site.facebook} class="text-white/80 hover:text-white" target="_blank" rel="noopener">Facebook</a></p>
+          </address>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-10" aria-hidden="true">
+      <span data-fit class="display it inline-block whitespace-nowrap text-red/90 select-none">Nu-Glaze®</span>
+    </div>
+
+    <div class="caps mt-6 flex flex-col gap-2 text-white/45 md:flex-row md:justify-between">
+      <p>© {year} Nu-Glaze · Patented uPVC glazing system</p>
+      <p><a href="/privacy/" class="hover:text-white">Privacy (POPIA)</a> · <a href="/sitemap-index.xml" class="hover:text-white">Sitemap</a></p>
+    </div>
+  </div>
+</footer>

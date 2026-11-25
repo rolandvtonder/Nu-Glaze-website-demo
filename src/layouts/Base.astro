@@ -1,0 +1,167 @@
+---
+import '../styles/global.css';
+import {Image} from 'astro:assets';
+import logo from '../assets/brand/logo.png';
+import Menu from '../components/Menu.astro';
+import Footer from '../components/Footer.astro';
+import {site} from '../data/site';
+
+export type Crumb = {name: string; href: string};
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra JSON-LD objects for this page (Product, FAQPage, HowTo…). */
+  schema?: Record<string, unknown>[];
+  crumbs?: Crumb[];
+  image?: string;
+  noindex?: boolean;
+  /** Pages that open on a light section ask for the solid header from the start. */
+  solidHeader?: boolean;
+}
+
+const {title, description, schema = [], crumbs = [], image = '/og-image.jpg', noindex = false, solidHeader = false} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+const fullTitle = Astro.url.pathname === '/' ? title : `${title} | Nu-Glaze`;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${site.url}/#business`,
+  name: site.legal,
+  alternateName: 'Nu-Glaze uPVC glazing system',
+  description: 'Patented uPVC clip-in glazing system that replaces window putty and wood beading on steel, timber and concrete frames. SANS 613 A3 rated.',
+  url: `${site.url}/`,
+  logo: `${site.url}/logo.png`,
+  image: `${site.url}/og-image.jpg`,
+  email: site.email,
+  telephone: site.phones[0].tel,
+  founder: {'@type': 'Person', name: site.owner},
+  foundingDate: site.founded,
+  address: {'@type': 'PostalAddress', addressLocality: site.locality, addressRegion: site.region, addressCountry: site.country},
+  areaServed: ['South Africa', 'United Kingdom', 'United States', 'Australia', 'New Zealand', 'Kenya', 'Malawi', 'Zimbabwe'],
+  openingHours: site.hoursSchema,
+  contactPoint: site.phones.map((p) => ({'@type': 'ContactPoint', telephone: p.tel, contactType: 'sales', areaServed: p.label === 'KwaZulu-Natal' ? 'ZA-KZN' : 'ZA', availableLanguage: ['English', 'Afrikaans']})),
+  sameAs: [site.facebook],
+};
+const website = {'@context': 'https://schema.org', '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: `${site.url}/`, publisher: {'@id': `${site.url}/#business`}};
+const breadcrumb = crumbs.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [{name: 'Home', href: '/'}, ...crumbs].map((c, i) => ({'@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.href, Astro.site).href})),
+    }
+  : null;
+const graph = [business, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
+---
+
+<!doctype html>
+<html lang="en-ZA" data-scrolled={solidHeader ? 'true' : 'false'} data-solid={solidHeader ? 'true' : undefined}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#11161a" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nu-Glaze" />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="geo.region" content="ZA-WC" />
+    <meta name="geo.placename" content={site.locality} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(graph.length === 1 ? graph[0] : graph)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="caps sr-only fixed top-3 left-3 z-[80] bg-white px-4 py-3 text-ink focus:not-sr-only">Skip to content</a>
+
+    <a href="/" class="logo-plate fixed top-4 left-4 z-[55] block bg-white px-3 py-2 shadow-[0_6px_30px_rgb(0_0_0/0.18)] transition-[padding,transform] duration-500 md:top-6 md:left-8 md:px-4 md:py-2.5" aria-label="Nu-Glaze home">
+      <Image src={logo} alt="Nu-Glaze — uPVC alternative to window putty" width={190} height={57} loading="eager" class="h-auto w-[132px] md:w-[172px]" />
+    </a>
+
+    <div class="fixed top-4 right-4 z-[55] flex items-center gap-2 md:top-6 md:right-8">
+      <a href={`tel:${site.phones[0].tel}`} class="hdr-chip caps hidden min-h-12 items-center px-5 backdrop-blur-md transition-colors duration-500 lg:inline-flex">
+        {site.phones[0].display}
+      </a>
+      <button type="button" data-menu-btn aria-expanded="false" aria-controls="site-menu" class="hdr-chip caps flex min-h-12 cursor-pointer items-center gap-4 px-6 backdrop-blur-md transition-colors duration-500">
+        <span data-menu-label>Menu</span>
+        <span class="menu-plus text-[18px] leading-none transition-transform duration-500 ease-silk" aria-hidden="true">+</span>
+      </button>
+    </div>
+
+    <a href="/contact/" class="quote-cta caps fixed right-4 bottom-4 z-[54] inline-flex min-h-12 items-center gap-3 bg-red px-6 text-white shadow-[0_10px_40px_rgb(0_0_0/0.25)] transition-colors hover:bg-red-deep md:right-8 md:bottom-7 md:px-8">
+      Get a <em class="font-display text-[15px] tracking-[0.06em] normal-case">free quote</em>
+    </a>
+
+    <Menu />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+    <div class="grain" aria-hidden="true"></div>
+
+    <script>
+      import '../scripts/site.ts';
+    </script>
+
+    <style is:global>
+      .hdr-chip {
+        background: rgb(255 255 255 / 0.18);
+        color: #fff;
+      }
+      .hdr-chip:hover {
+        background: rgb(255 255 255 / 0.3);
+      }
+      html[data-scrolled='true'] .hdr-chip {
+        background: rgb(17 22 26 / 0.88);
+      }
+      html[data-scrolled='true'] .hdr-chip:hover {
+        background: var(--color-ink);
+      }
+      html[data-menu-open='true'] .hdr-chip[data-menu-btn] {
+        background: var(--color-ink);
+        color: #fff;
+      }
+      html[data-menu-open='true'] .quote-cta {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .quote-cta {
+        transition: opacity 0.4s, background-color 0.3s;
+      }
+      html[data-menu-open='true'] .menu-plus {
+        transform: rotate(45deg);
+      }
+      html[data-scrolled='true']:not([data-solid]) .logo-plate {
+        transform: scale(0.92);
+        transform-origin: top left;
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+---
+import {nav, secondaryNav, site} from '../data/site';
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<!--
+  The menu: three slabs wipe in from the right one after another (ink, glass,
+  paper); the paper one stays and holds the items. Closing runs the reverse,
+  faster. Hover ripple is the #ripple SVG filter, animated in site.ts.
+-->
+<div id="site-menu" data-menu data-open="false" class="menu fixed inset-0 z-50">
+  <svg class="absolute size-0" aria-hidden="true">
+    <filter id="ripple" x="-5%" y="-30%" width="110%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="2" seed="2" result="n"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+  </svg>
+
+  <button type="button" data-menu-close aria-label="Close menu" tabindex="-1" class="scrim absolute inset-0 cursor-default bg-ink/40"></button>
+
+  <div class="slab bg-ink" style="--k:0"></div>
+  <div class="slab bg-glass" style="--k:1"></div>
+  <nav class="slab flex flex-col overflow-y-auto bg-paper px-8 pt-28 pb-10 text-ink md:px-12" style="--k:2" aria-label="Main menu" data-lenis-prevent>
+    <ul data-menu-list>
+      {
+        nav.map((item, i) => (
+          <li class="item" style={`--i:${i}`}>
+            <a
+              href={item.href}
+              data-menu-item
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              class="display relative inline-block py-1 text-[clamp(34px,3.4vw,52px)] transition-opacity duration-300"
+            >
+              {item.label}
+              <sup class="caps absolute top-2 -right-7 text-[10px] tracking-normal text-ink/40">0{i + 1}</sup>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="foot mt-auto grid gap-8 pt-12 sm:grid-cols-2">
+      <div>
+        <p class="caps text-ink/50">More</p>
+        <ul class="mt-3 space-y-1.5">
+          {
+            secondaryNav.map((l) => (
+              <li>
+                <a href={l.href} class="hover:text-red" aria-current={isCurrent(l.href) ? 'page' : undefined}>
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="caps text-ink/50">Talk to Johan</p>
+        <ul class="mt-3 space-y-1.5">
+          {
+            site.phones.map((p) => (
+              <li>
+                <a href={`tel:${p.tel}`} class="hover:text-red">
+                  {p.display} <span class="text-ink/50">· {p.label}</span>
+                </a>
+              </li>
+            ))
+          }
+          <li><a href={`mailto:${site.email}`} class="hover:text-red">{site.email}</a></li>
+          <li><a href={site.whatsapp} class="hover:text-red" rel="noopener" target="_blank">WhatsApp us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .menu[data-open='false'] {
+    pointer-events: none;
+  }
+  .scrim {
+    opacity: 0;
+    transition: opacity 0.6s;
+  }
+  .menu[data-open='true'] .scrim {
+    opacity: 1;
+  }
+  .slab {
+    position: absolute;
+    inset-block: 0;
+    right: 0;
+    width: min(40vw, 580px);
+    transform: translateX(104%);
+    transition: transform 0.8s var(--ease-wipe);
+    /* Close: reverse order, faster */
+    transition-delay: calc((2 - var(--k)) * 0.06s);
+  }
+  .menu[data-open='true'] .slab {
+    transform: none;
+    transition-delay: calc(var(--k) * 0.09s);
+  }
+  @media (max-width: 767px) {
+    .slab {
+      width: 100%;
+    }
+  }
+  .item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s var(--ease-silk),
+      transform 0.7s var(--ease-silk);
+  }
+  .menu[data-open='true'] .item {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.42s + var(--i) * 0.05s);
+  }
+  .foot {
+    opacity: 0;
+    transition: opacity 0.7s;
+  }
+  .menu[data-open='true'] .foot {
+    opacity: 1;
+    transition-delay: 0.75s;
+  }
+  [data-menu-list][data-hover] a:not(.is-hot) {
+    opacity: 0.35;
+  }
+  a.is-hot {
+    filter: url(#ripple);
+  }
+  a[aria-current='page'] {
+    color: var(--color-red);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slab,
+    .item {
+      transition-duration: 0.01s !important;
+      transition-delay: 0s !important;
+    }
+  }
+</style>

@@ -1,0 +1,104 @@
+---
+import {getImage} from 'astro:assets';
+import {series} from '../data/site';
+import {featured} from '../data/gallery';
+
+/*
+  Three tall panels slide in from the right one after another, each showing
+  its own third of ONE photograph of the profile range — so three panels cost
+  one download and always line up into a single picture.
+*/
+const wide = await getImage({src: featured.profiles.img, width: 2400, format: 'webp'});
+---
+
+<section id="series" class="on-dark relative bg-ink text-white" aria-labelledby="series-title">
+  <div class="mx-auto flex max-w-[1680px] flex-col gap-4 px-5 pt-20 pb-10 md:flex-row md:items-end md:justify-between md:px-14">
+    <h2 id="series-title" class="display text-[clamp(40px,5vw,84px)]" data-reveal>
+      <span class="block">Three profiles.</span>
+      <span class="it block text-glass">One system.</span>
+    </h2>
+    <p class="max-w-[44ch] text-white/75" data-reveal style="--d:.1s">
+      Every Nu-Glaze profile comes in 2.4 m lengths and clips over the glass edge at a clean 45° — the slope that sheds water instead of trapping it.
+    </p>
+  </div>
+
+  <div data-panels class="panels grid h-svh max-h-[900px] min-h-[620px] grid-cols-3 gap-[3px] overflow-hidden max-md:h-auto max-md:max-h-none max-md:grid-cols-1">
+    {
+      series.map((s, i) => (
+        <article class="panel relative overflow-hidden max-md:h-[78svh] max-md:min-h-[520px]" style={`--i:${i};background:${s.tint}`}>
+          {/* One slice of the shared photo: it is three panels wide, shifted per panel. */}
+          <img
+            src={wide.src}
+            alt={i === 0 ? featured.profiles.alt : ''}
+            aria-hidden={i === 0 ? undefined : 'true'}
+            loading="lazy"
+            decoding="async"
+            class="slice absolute top-0 h-full max-w-none object-cover"
+            style={`width:300%;left:${-100 * i}%`}
+          />
+          {/* Each panel keeps its series colour as a wash over its slice. */}
+          <div class="absolute inset-0 opacity-60 mix-blend-multiply" style={`background:${s.tint}`} />
+          <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(17_22_26/0.8),rgb(17_22_26/0.15)_40%,rgb(17_22_26/0.9))]" />
+          <div class="relative flex h-full flex-col p-7 md:p-9">
+            <h3 class="display text-[clamp(44px,4.4vw,78px)]">
+              <span class="block">{s.name[0]}</span>
+              <span class="it block text-[0.55em] text-white/80">{s.name[1]}</span>
+            </h3>
+            <p class="caps mt-4 text-glass">{s.title}</p>
+            <div class="specs mt-auto">
+              <p class="max-w-[34ch] text-white/85">{s.blurb}</p>
+              <dl class="mt-6 grid grid-cols-2 gap-x-6 gap-y-3">
+                {s.specs.map(([k, v]) => (
+                  <div>
+                    <dt class="caps text-white/55">{k}</dt>
+                    <dd class="text-[15px] font-medium">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <a href={`/products/#${s.id}`} class="caps mt-7 inline-flex min-h-11 items-center gap-2 border-b border-white/40 hover:border-white">
+                {s.name[0]} specifications <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  /* Slices sit side-by-side on desktop; on phones each panel is full width,
+     so each shows the whole photo instead of a third. */
+  @media (max-width: 767px) {
+    .slice {
+      width: 100% !important;
+      left: 0 !important;
+    }
+  }
+  :global(.js) .panel {
+    transform: translateX(calc(100% + 100vw));
+    transition: transform 1.1s var(--ease-wipe);
+    transition-delay: calc(0.12s + var(--i) * 0.16s);
+  }
+  :global(.js) [data-shown] .panel {
+    transform: none;
+  }
+  :global(.js) .specs {
+    opacity: 0;
+    transition: opacity 0.7s 1.4s;
+  }
+  :global(.js) [data-shown] .specs {
+    opacity: 1;
+  }
+  @media (max-width: 767px) {
+    :global(.js) .panel {
+      transition-delay: 0.1s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .panel {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

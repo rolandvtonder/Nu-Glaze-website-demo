@@ -1,0 +1,44 @@
+---
+import Guide from '../layouts/Guide.astro';
+import {featured} from '../data/gallery';
+import {site} from '../data/site';
+---
+
+<Guide
+  title="Warranty — Nu-Glaze Glazing System Warranty Information"
+  description="Nu-Glaze warranty: outdoor-grade UV-resistant uPVC with a minimum 5-year life expectancy to specification, no deterioration recorded in the field since 2012, plus exclusions and test results."
+  kicker="Warranty"
+  lines={[{t: 'Built to last.'}, {t: 'Backed in writing.', i: true}]}
+  intro="What the Nu-Glaze warranty covers, how long the material is expected to last, and what can void it."
+  image={featured.waterfront}
+  crumbs={[{name: 'Warranty', href: '/warranty/'}]}
+  group="info"
+>
+  <h2>The material</h2>
+  <p>Nu-Glaze profiles are made from outdoor-grade, UV-resistant unplasticised PVC (uPVC) with no heavy-metal heat stabilisers — confirmed by infrared spectroscopy.</p>
+
+  <h2>Life expectancy</h2>
+  <p>When used according to specification, the warranted minimum life expectancy is <strong>five years</strong>. Heat, UV exposure, pollution and other site conditions can shorten it.</p>
+  <p>In practice, installations in full sun and harsh conditions have shown <strong>no deterioration since 2012</strong>, and the compound has passed accelerated weathering beyond the equivalent of 21 years.</p>
+
+  <h2>Test results</h2>
+  <ul>
+    <li>Water and air pressure above 2,000 Pa, in 15-minute sessions, did not dislodge the system.</li>
+    <li>No air leakage at 75 Pa.</li>
+    <li>Silicone tested at CSIR Pretoria (Firelab), witnessed by AAAMSA and SABS: A3 against SANS 613.</li>
+    <li>All testing followed the official installation manual, which is free at point of purchase or on request.</li>
+  </ul>
+
+  <h2>What isn't covered</h2>
+  <ul>
+    <li>Exposure to harmful gases, chemicals, abrasion or abuse.</li>
+    <li>Incorrect processing or installation.</li>
+    <li>Intentional or negligent damage.</li>
+    <li>Solvents — in particular ketones (acetone, MEK), tetrahydrofuran and low-alcohol solvents.</li>
+    <li>Extreme weather and extreme temperatures.</li>
+  </ul>
+  <p>The end user is responsible for confirming that the substrate (the frame) is suitable for the installation.</p>
+
+  <h2>Full warranty document</h2>
+  <p><a href={site.docs.warranty} target="_blank" rel="noopener">Download the Nu-Glaze warranty (PDF)</a>. Questions? Email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+</Guide>

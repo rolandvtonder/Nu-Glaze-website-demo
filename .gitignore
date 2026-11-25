@@ -1,0 +1,7 @@
+node_modules
+dist
+.astro
+# Original photo dump; the site uses the copies in src/assets/photos
+media
+# Local editor/tool settings
+.claude

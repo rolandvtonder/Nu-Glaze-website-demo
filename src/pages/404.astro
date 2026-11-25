@@ -1,0 +1,22 @@
+---
+import {Image} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import {featured} from '../data/gallery';
+---
+
+<Base title="Page not found" description="This page doesn't exist. Find Nu-Glaze products, installation guides and contact details from the home page." noindex>
+  <section class="on-dark relative flex min-h-svh items-end overflow-hidden bg-ink text-white">
+    <Image src={featured.vsPutty.img} alt="" widths={[1024, 1600]} sizes="100vw" class="absolute inset-0 h-full w-full object-cover opacity-30" />
+    <div class="relative mx-auto w-full max-w-[1680px] px-5 pb-24 md:px-14">
+      <p class="caps text-glass">Error 404</p>
+      <h1 class="display mt-4 text-[clamp(56px,9vw,160px)]"><span class="block">This pane</span><span class="it block text-red">is missing.</span></h1>
+      <p class="mt-6 max-w-[50ch] text-white/80">The page you were looking for has moved or never existed. Try one of these instead:</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/" class="btn bg-white text-ink hover:bg-glass">Home</a>
+        <a href="/products/" class="btn btn-ghost">Products</a>
+        <a href="/installation/" class="btn btn-ghost">Installation</a>
+        <a href="/contact/" class="btn btn-ghost">Contact</a>
+      </div>
+    </div>
+  </section>
+</Base>

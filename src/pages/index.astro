@@ -1,0 +1,266 @@
+---
+import {Image} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import HomeHero from '../components/HomeHero.astro';
+import SeriesPanels from '../components/SeriesPanels.astro';
+import {featured, photo} from '../data/gallery';
+import {stats} from '../data/site';
+import fullInstall from '../assets/brand/full-install.jpg';
+import frontalInstall from '../assets/brand/frontal-install.jpg';
+import sabs from '../assets/brand/sabs.png';
+import sagga from '../assets/brand/sagga.jpg';
+
+const problems = [
+  ['Repeat repairs', 'Clay putty dries, cracks and crumbles. Wood beading rots and swells. Either way you pay for the same window again in a few years.'],
+  ['A security gap', 'Old putty can be picked out with a screwdriver and the pane lifted from outside — a known route for burglars.'],
+  ['7–14 days of curing', "Fresh putty can't be painted for one to two weeks, which means scaffolding stays up and the job stays open."],
+  ['Messy finish', 'Hand-tooled putty is never quite straight, and birds and insects pick at it.'],
+];
+
+const benefits = [
+  ['Patented', 'A South African-designed clip-in system with international patent cover.'],
+  ['Clean sightlines', 'A crisp 45° line over the glass edge, the same on every pane.'],
+  ['Weatherproof', 'Tested to SANS 613 A3: no water, air or dust leakage through the glazing.'],
+  ['No curing time', 'Paint straight away — or leave white, black or dove-grey profiles unpainted.'],
+  ['Hard to break in', 'Bonded from the inside: the pane can’t be removed from outside without breaking it.'],
+  ['UV-stabilised uPVC', 'Outdoor-grade, heavy-metal-free and recyclable. No cracking, drying or shrinking.'],
+  ['Frame-friendly', 'Works on steel, timber, concrete and polycrete — including heritage frames.'],
+  ['Lower lifetime cost', 'Faster installs, fewer callbacks and no re-glazing cycle.'],
+];
+
+const projects = [
+  {...featured.conservatory, cls: 'row-span-2'},
+  {...featured.capeDutch, cls: ''},
+  {...featured.bathroom, cls: 'row-span-2'},
+  {...featured.waterfront, cls: ''},
+  {...featured.heritageColumns, cls: ''},
+  {...featured.steelCorner, cls: ''},
+];
+
+const faqs = [
+  ['Can Nu-Glaze be removed from outside once cured?', 'Not without breaking the glass. The silicone bond sits on the inside of the profile, so the pane can only be released from inside the building.'],
+  ['Do I have to remove all the old putty?', 'Only for a full installation. For a frontal installation the glass stays in and you only remove the outer triangle of putty.'],
+  ['Does it need painting?', 'No. White, black and dove-grey profiles can stay as they are. If you want a colour, key the surface lightly and paint with a water-based exterior acrylic — no waiting for it to cure.'],
+];
+---
+
+<Base
+  title="Nu-Glaze | uPVC Alternative to Window Putty — Patented Glazing System"
+  description="Nu-Glaze replaces window putty and wood beading with a patented clip-in uPVC profile. SANS 613 A3 rated, burglar-resistant, no curing time. Steel, timber & heritage windows across South Africa."
+>
+  <HomeHero />
+  <SeriesPanels />
+
+  <!-- The problem -->
+  <section class="bg-paper" aria-labelledby="problem-title">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-[1fr_1.1fr] lg:gap-24">
+      <div class="lg:sticky lg:top-28 lg:self-start" data-reveal>
+        <p class="caps text-red">The problem with putty</p>
+        <h2 id="problem-title" class="display mt-5 text-[clamp(44px,5.6vw,96px)]">
+          <span class="block">Putty fails.</span>
+          <span class="it block text-steel">Eventually,</span>
+          <span class="block">every time.</span>
+        </h2>
+        <figure class="mt-10">
+          <Image src={featured.vsPutty.img} alt={featured.vsPutty.alt} widths={[480, 800, 1200]} sizes="(min-width:1024px) 40vw, 100vw" class="aspect-square w-full max-w-[560px] object-cover" />
+          <figcaption class="caps mt-3 text-ink/55">Same window, two methods: Nu-Glaze (left) and cracked putty (right)</figcaption>
+        </figure>
+      </div>
+      <div>
+        <p class="max-w-[52ch] text-[19px] text-ink/80" data-reveal>
+          Johan Otto invented Nu-Glaze after re-glazing the same windows three times — clay putty and wood beading both gave up within a few seasons. He wanted something hard, workable and non-metallic that would bridge the 90° joint between glass and frame with a 45° slope, and cost no more than putty over its life.
+        </p>
+        <ol class="mt-12 divide-y divide-line border-y border-line">
+          {
+            problems.map(([t, d], i) => (
+              <li class="grid grid-cols-[3.5rem_1fr] gap-4 py-8" data-reveal style={`--d:${i * 0.06}s`}>
+                <span class="display text-[40px] text-red">0{i + 1}</span>
+                <div>
+                  <h3 class="display text-[30px]">{t}</h3>
+                  <p class="mt-2 text-ink/75">{d}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <a href="/why-nu-glaze/" class="btn btn-ghost mt-10" data-reveal>Nu-Glaze vs putty & beading <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="bg-stone" aria-labelledby="benefits-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <h2 id="benefits-title" class="display text-[clamp(44px,5.6vw,96px)]" data-reveal>
+          <span class="block">Beautiful,</span>
+          <span class="it block text-red">long-lasting</span>
+          <span class="block">glazing.</span>
+        </h2>
+        <p class="max-w-[44ch] text-ink/75" data-reveal style="--d:.1s">
+          A modern alternative that cuts maintenance, downtime and repeat costs — in a finish that looks better than putty on day one and stays that way.
+        </p>
+      </div>
+      <ul class="mt-16 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {
+          benefits.map(([t, d], i) => (
+            <li class="bg-stone p-7 md:p-9" data-reveal style={`--d:${(i % 4) * 0.06}s`}>
+              <span class="caps text-green">0{i + 1}</span>
+              <h3 class="display mt-4 text-[28px]">{t}</h3>
+              <p class="mt-3 text-[16px] text-ink/75">{d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="on-dark bg-slate text-white" aria-label="Nu-Glaze in numbers">
+    <dl class="mx-auto grid max-w-[1680px] grid-cols-2 gap-px px-5 py-20 md:px-14 lg:grid-cols-4">
+      {
+        stats.map((s, i) => (
+          <div class="flex flex-col-reverse justify-end py-6 pr-6" data-reveal style={`--d:${i * 0.08}s`}>
+            <dt class="mt-2 max-w-[24ch] text-white/70">{s.l}</dt>
+            <dd class="display text-[clamp(56px,7vw,112px)] text-white">{s.n}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- Two methods -->
+  <section class="bg-paper" aria-labelledby="methods-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <p class="caps text-red" data-reveal>Two ways to install</p>
+      <h2 id="methods-title" class="display mt-5 text-[clamp(44px,5.6vw,96px)]" data-reveal>
+        <span class="block">New glass,</span>
+        <span class="it block text-steel">or glass that stays.</span>
+      </h2>
+      <div class="mt-16 grid gap-10 md:grid-cols-2">
+        {
+          [
+            {img: fullInstall, alt: 'Diagram of a Nu-Glaze full installation: the profile assembled on the glass and set into a bead of silicone in the rebate', t: 'Full installation', d: 'For new frames, new glass or a full refurbishment. Profiles are mitred and assembled around the pane, then the whole unit is pressed into a bead of neutral-cure silicone.', k: 'Glass out'},
+            {img: frontalInstall, alt: 'Diagram of a Nu-Glaze frontal installation: the front section of the profile bonded over the existing glass', t: 'Frontal installation', d: 'For replacing putty or beading without taking the glass out. Remove the outer putty, snap off the profile’s back lip and bond it over the existing pane.', k: 'Glass stays in'},
+          ].map((m, i) => (
+            <article class="group" data-reveal style={`--d:${i * 0.1}s`}>
+              <div class="overflow-hidden bg-white">
+                <Image src={m.img} alt={m.alt} widths={[400, 700]} sizes="(min-width:768px) 45vw, 100vw" class="aspect-[4/3] w-full object-contain p-8 transition-transform duration-700 ease-silk group-hover:scale-[1.03]" />
+              </div>
+              <p class="caps mt-6 text-green">{m.k}</p>
+              <h3 class="display mt-2 text-[38px]">{m.t}</h3>
+              <p class="mt-3 max-w-[52ch] text-ink/75">{m.d}</p>
+            </article>
+          ))
+        }
+      </div>
+      <div class="mt-12 flex flex-wrap gap-3" data-reveal>
+        <a href="/installation/" class="btn btn-red">Step-by-step installation guide</a>
+        <a href="/installation/mitering/" class="btn btn-ghost">How to mitre the corners</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects teaser -->
+  <section class="on-dark bg-ink text-white" aria-labelledby="projects-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <h2 id="projects-title" class="display text-[clamp(44px,5.6vw,96px)]" data-reveal>
+          <span class="block">From cottages</span>
+          <span class="it block text-glass">to correctional</span>
+          <span class="block">facilities.</span>
+        </h2>
+        <p class="max-w-[42ch] text-white/75" data-reveal style="--d:.1s">
+          Homes, heritage buildings, schools, offices and a prison — in South Africa and across eight countries. Over 200 photos from real jobs.
+        </p>
+      </div>
+      <div class="mt-14 grid auto-rows-[200px] grid-cols-2 gap-[3px] md:auto-rows-[260px] md:grid-cols-3">
+        {
+          projects.map((p, i) => (
+            <figure class:list={['relative overflow-hidden', p.cls]} data-reveal style={`--d:${(i % 3) * 0.08}s`}>
+              <Image src={p.img} alt={p.alt} widths={[400, 700, 1000]} sizes="(min-width:768px) 33vw, 50vw" class="h-full w-full object-cover transition-transform duration-[1.2s] ease-silk hover:scale-105" />
+            </figure>
+          ))
+        }
+      </div>
+      <a href="/projects/" class="btn btn-ghost mt-12" data-reveal>See all projects <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- Security -->
+  <section class="bg-paper" aria-labelledby="security-title">
+    <div class="mx-auto grid max-w-[1680px] items-center gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-2 lg:gap-24">
+      <div class="relative" data-reveal>
+        <Image src={photo(131)} alt="Steel-framed window glazed with Nu-Glaze, bonded from the inside so panes cannot be lifted out" widths={[500, 900, 1200]} sizes="(min-width:1024px) 45vw, 100vw" class="aspect-[4/5] w-full object-cover" />
+        <p class="caps absolute bottom-0 left-0 bg-red px-5 py-3 text-white">Bonded from the inside</p>
+      </div>
+      <div>
+        <p class="caps text-red" data-reveal>Security</p>
+        <h2 id="security-title" class="display mt-5 text-[clamp(44px,5.2vw,88px)]" data-reveal>
+          <span class="block">Glass that stays</span>
+          <span class="it block text-steel">where you put it.</span>
+        </h2>
+        <p class="mt-8 max-w-[54ch] text-ink/80" data-reveal>
+          Local news in the West Coast has reported burglars getting into a nursery school and a primary school simply by digging out soft putty and lifting the panes. Nu-Glaze is bonded with silicone on the inside face of the profile, so the only way to remove a pane from outside is to break it.
+        </p>
+        <p class="mt-5 max-w-[54ch] text-ink/80" data-reveal>
+          At the invitation of its director, Pollsmoor correctional facility in the Western Cape had 101 window panes glazed with Nu-Glaze to test durability against cost.
+        </p>
+        <a href="/why-nu-glaze/#security" class="btn btn-ghost mt-10" data-reveal>Read the case studies <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reach & Teach + certification -->
+  <section class="bg-stone" aria-label="Training and certification">
+    <div class="mx-auto grid max-w-[1680px] gap-[3px] md:grid-cols-2">
+      <a href="/reach-and-teach/" class="group on-dark relative block min-h-[520px] overflow-hidden bg-green text-white" data-reveal>
+        <Image src={featured.training.img} alt={featured.training.alt} widths={[600, 1000, 1400]} sizes="(min-width:768px) 50vw, 100vw" class="absolute inset-0 h-full w-full object-cover opacity-55 transition-transform duration-[1.2s] ease-silk group-hover:scale-105" />
+        <div class="absolute inset-0 bg-[linear-gradient(0deg,rgb(10_70_36/0.95),rgb(10_70_36/0.1))]"></div>
+        <div class="relative flex h-full min-h-[520px] flex-col justify-end p-8 md:p-12">
+          <p class="caps text-white/80">Reach & Teach programme</p>
+          <h2 class="display mt-4 text-[clamp(40px,4.4vw,72px)]"><span class="block">Skills that</span><span class="it block">pay the rent.</span></h2>
+          <p class="mt-5 max-w-[46ch] text-white/85">Over 100 people trained to install Nu-Glaze and run their own small business — working towards an NQF level 2 qualification.</p>
+          <span class="caps mt-7 inline-flex items-center gap-2">About the programme <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <div class="flex min-h-[520px] flex-col justify-end bg-white p-8 md:p-12" data-reveal style="--d:.1s">
+        <div class="flex items-center gap-8">
+          <Image src={sabs} alt="SABS approved logo" width={180} class="h-auto w-[130px]" />
+          <Image src={sagga} alt="South African Glass and Glazing Association logo" width={180} class="h-auto w-[120px]" />
+        </div>
+        <p class="caps mt-10 text-red">Tested & certified</p>
+        <h2 class="display mt-4 text-[clamp(40px,4.4vw,72px)]"><span class="block">SANS 613</span><span class="it block text-steel">A3 rated.</span></h2>
+        <p class="mt-5 max-w-[48ch] text-ink/75">Tested by SABS and AAAMSA laboratories: no water, air or dust leakage, and no dislodgement under 2,000 Pa of water and air pressure. Compliant with SANS 10400-XA.</p>
+        <div class="mt-7 flex flex-wrap gap-x-6 gap-y-2">
+          <a href="/certification/" class="caps inline-flex min-h-11 items-center gap-2 border-b border-ink/30 hover:border-ink">Certification <span aria-hidden="true">→</span></a>
+          <a href="/warranty/" class="caps inline-flex min-h-11 items-center gap-2 border-b border-ink/30 hover:border-ink">Warranty <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ teaser -->
+  <section class="bg-paper" aria-labelledby="faq-title">
+    <div class="mx-auto grid max-w-[1680px] gap-12 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-[1fr_1.4fr]">
+      <h2 id="faq-title" class="display text-[clamp(44px,5.2vw,88px)]" data-reveal>
+        <span class="block">Questions</span>
+        <span class="it block text-red">we hear a lot.</span>
+      </h2>
+      <div>
+        {
+          faqs.map(([q, a], i) => (
+            <details class="group border-b border-line py-6" data-reveal style={`--d:${i * 0.06}s`} open={i === 0}>
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-6 text-[20px] font-medium">
+                {q}
+                <span class="display text-[28px] leading-none text-red transition-transform duration-300 group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <p class="mt-4 max-w-[60ch] text-ink/75">{a}</p>
+            </details>
+          ))
+        }
+        <a href="/faq/" class="btn btn-ghost mt-10" data-reveal>All 17 tips & answers <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</Base>

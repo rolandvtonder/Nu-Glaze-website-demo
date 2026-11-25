@@ -1,0 +1,43 @@
+---
+import {Image} from 'astro:assets';
+import Guide from '../../layouts/Guide.astro';
+import {featured} from '../../data/gallery';
+import msx from '../../assets/brand/msx1.png';
+---
+
+<Guide
+  title="Handling & Storing Nu-Glaze Profiles, Sealants and the MSX-1 Cutter"
+  description="How to store Nu-Glaze uPVC profiles, neutral-cure silicone, siliconized acrylic and the MSX-1 mitre cutter so they perform as specified."
+  kicker="Handling & storage"
+  lines={[{t: 'Store it flat.'}, {t: 'Keep it cool.', i: true}]}
+  intro="Nu-Glaze is a finishing product — any damage before installation shows in the finished job. A few simple rules keep it perfect."
+  image={featured.profiles}
+  crumbs={[{name: 'Installation', href: '/installation/'}, {name: 'Handling & storage', href: '/installation/handling-storage/'}]}
+>
+  <h2>Profiles</h2>
+  <ul>
+    <li>Keep profiles in their plastic sheeting until you use them, and open one bundle at a time.</li>
+    <li>Store flat and straight on a smooth floor. Never lean them against a wall for more than 10 minutes.</li>
+    <li>Keep them out of the sun and away from temperature extremes before installation. Once installed they handle full sun and normal temperature swings.</li>
+    <li>Don't put heavy or sharp objects on them, and don't walk on them.</li>
+  </ul>
+
+  <h2>Neutral-cure silicone & siliconized acrylic</h2>
+  <ul>
+    <li>Store below 25 °C, out of direct sunlight.</li>
+    <li>Keep cartridges closed and use one at a time.</li>
+    <li>Don't stack heavy items on them.</li>
+  </ul>
+
+  <h2>MSX-1 mitre cutter</h2>
+  <Image src={msx} alt="Nu-Glaze MSX-1 multi-purpose mitre cutter" widths={[400]} class="w-full max-w-[400px] bg-white" />
+  <ul>
+    <li>The blade is sharp — keep it away from children.</li>
+    <li>Keep metal parts lightly oiled; stainless steel can still corrode when left damp.</li>
+    <li>Keep small parts together, and don't drop it or stack heavy things on it.</li>
+    <li>Avoid long exposure above about 40–60 °C, which can deform the nylon and HDPE parts.</li>
+  </ul>
+
+  <h2>Your responsibility</h2>
+  <p>Once material is in your possession, you take full responsibility for storing and handling it correctly. If anything arrives damaged, let us know in writing within five days of receipt.</p>
+</Guide>

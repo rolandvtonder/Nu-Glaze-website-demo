@@ -1,0 +1,64 @@
+---
+import type {ImageMetadata} from 'astro';
+import Base, {type Crumb} from './Base.astro';
+import PageHero, {type Line} from '../components/PageHero.astro';
+import {nav, secondaryNav, site} from '../data/site';
+
+/**
+ * Long-form pages (installation guides, warranty, privacy…): the photo hero,
+ * then a sticky side column with the related guides and a help box beside the
+ * article.
+ */
+interface Props {
+  title: string;
+  description: string;
+  kicker: string;
+  lines: Line[];
+  intro: string;
+  image: {img: ImageMetadata; alt: string};
+  crumbs: Crumb[];
+  schema?: Record<string, unknown>[];
+  /** Which link group to show in the side column. */
+  group?: 'install' | 'info';
+}
+const {title, description, kicker, lines, intro, image, crumbs, schema, group = 'install'} = Astro.props;
+const installLinks = [{href: '/installation/', label: 'Installation guide'}, ...nav.find((n) => n.href === '/installation/')!.children!, {href: '/faq/', label: 'Tips, tricks & FAQ'}];
+const links = group === 'install' ? installLinks : secondaryNav;
+const path = Astro.url.pathname;
+---
+
+<Base title={title} description={description} schema={schema} crumbs={crumbs}>
+  <PageHero kicker={kicker} lines={lines} intro={intro} image={image} crumbs={crumbs} />
+  <div class="bg-paper">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-20 md:px-14 md:py-28 lg:grid-cols-[280px_1fr] lg:gap-20">
+      <aside class="lg:sticky lg:top-28 lg:self-start" aria-label="Related pages">
+        <p class="caps text-ink/50">{group === 'install' ? 'Installation guides' : 'More information'}</p>
+        <ul class="mt-4 border-t border-line">
+          {
+            links.map((l) => (
+              <li class="border-b border-line">
+                <a
+                  href={l.href}
+                  aria-current={path === l.href ? 'page' : undefined}
+                  class="flex min-h-12 items-center justify-between gap-4 py-2 text-[16px] hover:text-red aria-[current=page]:font-semibold aria-[current=page]:text-red"
+                >
+                  {l.label} <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="on-dark mt-10 bg-ink p-6 text-white">
+          <p class="display text-[26px]">Stuck on a job?</p>
+          <p class="mt-2 text-[15px] text-white/75">Send a photo of the frame and Johan will tell you which profile and method to use.</p>
+          <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-red mt-5 w-full justify-center">WhatsApp a photo</a>
+          <a href={`mailto:${site.email}`} class="mt-3 block text-center text-[14px] break-all text-white/70 underline underline-offset-4 hover:text-white">{site.email}</a>
+        </div>
+      </aside>
+      <article class="prose-ng">
+        <slot />
+      </article>
+    </div>
+  </div>
+  <slot name="after" />
+</Base>

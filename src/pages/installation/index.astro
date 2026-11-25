@@ -1,0 +1,101 @@
+---
+import {Image} from 'astro:assets';
+import Guide from '../../layouts/Guide.astro';
+import {featured} from '../../data/gallery';
+import {site} from '../../data/site';
+import fullInstall from '../../assets/brand/full-install.jpg';
+import frontalInstall from '../../assets/brand/frontal-install.jpg';
+import cutter from '../../assets/brand/cutter.jpg';
+import f4b from '../../assets/brand/f4b-render.png';
+
+const fullSteps = [
+  'Measure and mitre the four profile pieces for the pane.',
+  'Dry-fit each piece onto the glass edge, then test-fit the glass and profiles in the frame and trim until it sits right.',
+  'Run silicone into the U-channel of each profile and reassemble the profiles onto the glass.',
+  'Apply a continuous 3–4 mm bead of neutral-cure silicone into the frame rebate.',
+  'Press the glass-and-profile assembly into the frame and push the profiles flush.',
+  'Wipe away excess silicone with methylated spirits.',
+  'Fill any hairline gaps under 2 mm with colour-matched siliconized acrylic, working in small sections.',
+];
+const frontalSteps = [
+  'Measure and mitre the four profile pieces.',
+  'Snap off the back lip of each profile, dry-test the front section and trim until it sits flush.',
+  'Run a silicone bead around the frame, with a thumbnail-sized blob at each corner.',
+  'Press the bottom piece in first, then the two sides, then the top.',
+  'Wipe excess silicone with methylated spirits and fill hairline gaps with siliconized acrylic.',
+];
+
+const howTo = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to install Nu-Glaze uPVC glazing profiles',
+  description: 'Step-by-step installation of the Nu-Glaze clip-in uPVC glazing system using the full or frontal method.',
+  supply: [{'@type': 'HowToSupply', name: 'Nu-Glaze uPVC profiles (2.4 m lengths)'}, {'@type': 'HowToSupply', name: 'Neutral-cure silicone'}, {'@type': 'HowToSupply', name: 'Siliconized acrylic'}, {'@type': 'HowToSupply', name: 'Methylated spirits or thinners'}],
+  tool: [{'@type': 'HowToTool', name: 'MSX-1 mitre cutter'}, {'@type': 'HowToTool', name: 'Caulking gun'}, {'@type': 'HowToTool', name: 'Blade scraper'}],
+  step: [
+    {'@type': 'HowToStep', name: 'Clean the frame', text: 'Remove old putty, beading and nails, scrape the rebate to a clean 90° and wipe with methylated spirits or thinners.'},
+    {'@type': 'HowToStep', name: 'Paint and prepare', text: 'Paint the visible frame perimeter and clean the glass with a blade scraper. Never use turpentine.'},
+    {'@type': 'HowToStep', name: 'Cut the profiles', text: 'Cut bottom, sides and top in that order, longest pieces first from full 2.4 m lengths.'},
+    ...fullSteps.map((t, i) => ({'@type': 'HowToStep', name: `Full installation step ${i + 1}`, text: t})),
+  ],
+};
+---
+
+<Guide
+  title="How to Install Nu-Glaze — Full & Frontal Installation Guide"
+  description="Step-by-step Nu-Glaze installation: preparing steel, timber and F4B frames, cutting and mitring profiles, and the full and frontal installation methods."
+  kicker="Installation guide"
+  lines={[{t: 'Clean, cut,'}, {t: 'clip & seal.', i: true}]}
+  intro="Everything a glazier, contractor, painter or handy home-owner needs to fit Nu-Glaze properly — from ordering to the final wipe-down."
+  image={featured.workshop}
+  crumbs={[{name: 'Installation', href: '/installation/'}]}
+  schema={[howTo]}
+>
+  <h2>Before you start: plan & order</h2>
+  <ol>
+    <li><strong>Identify the profile.</strong> Measure the frame's toe height and rebate depth and the glass thickness, then match them to the <a href="/products/">profile range</a>.</li>
+    <li><strong>Choose a method.</strong> Full installation if the glass is coming out; frontal installation if it stays in.</li>
+    <li><strong>Work out quantities.</strong> Add up the perimeter of every pane, add 10% for cutting, and divide by 2.4 m. The <a href="/faq/#estimate">material estimate tip</a> has a worked example.</li>
+    <li><strong>Order by email</strong> to <a href={`mailto:${site.email}`}>{site.email}</a> with: profile code, quantity, your name, delivery address, email, and your business name and VAT number if applicable.</li>
+  </ol>
+
+  <h2>Step 1 — Clean the frame</h2>
+  <table>
+    <thead><tr><th scope="col">Frame</th><th scope="col">What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Old timber</td><td>Remove beadings and nails, clean out the rebate and remove all putty. Wipe with thinners or methylated spirits.</td></tr>
+      <tr><td>Old putty / standard steel</td><td>Scrape back to a clean 90° corner and wipe with thinners or methylated spirits.</td></tr>
+      <tr><td>F4B hollow steel</td><td>Keep sound putty inside the hollow, or pack out with 3–4 mm × 7–9 mm hard plastic spacers every 300–500 mm.</td></tr>
+      <tr><td>New frames</td><td>Wipe with thinners or methylated spirits.</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <Image src={f4b} alt="3D render of a Nu-Glaze profile seated on an F4B hollow steel window section with spacers" widths={[600, 1000]} sizes="(min-width:1024px) 60vw, 100vw" class="w-full bg-white" />
+    <figcaption class="caps mt-3 text-ink/55">Nu-Glaze on an F4B hollow steel section</figcaption>
+  </figure>
+
+  <h2>Step 2 — Sand, paint & clean the glass</h2>
+  <p>Paint the frame (only the perimeter that will be visible) and clean the glass with a blade scraper. Use methylated spirits or thinners to degrease. <strong>Never use turpentine</strong> — it leaves an oily film that stops silicone from bonding.</p>
+
+  <h2>Step 3 — Cut the profiles</h2>
+  <p>Cut in this order: bottom, the two sides, then the top. Cut the longest pieces first from full 2.4 m lengths so the offcuts are still useful.</p>
+
+  <h2>Step 4 — Mitre the corners</h2>
+  <p>Keep the profile flat on the cutter's anvil while you cut. The <a href="/installation/mitering/">mitering guide</a> explains the "tight measure minus 3 mm" rule and why the corners overlap the way they do.</p>
+  <figure>
+    <Image src={cutter} alt="Nu-Glaze MSX-1 mitre cutter showing the correct position of the profile on the anvil" widths={[500, 900]} sizes="(min-width:1024px) 50vw, 100vw" class="w-full max-w-[520px] bg-white" />
+  </figure>
+
+  <h2 id="full">Method A — Full installation</h2>
+  <p>For new frames, new glass, or a full refurbishment where the glass comes out.</p>
+  <ol>{fullSteps.map((s) => <li>{s}</li>)}</ol>
+  <Image src={fullInstall} alt="Diagram of the Nu-Glaze full installation method showing where silicone is applied" widths={[433]} class="w-full max-w-[433px] bg-white" />
+
+  <h2 id="frontal">Method B — Frontal installation</h2>
+  <p>For replacing failing putty or beading while the glass stays in place. Only the outer triangle of old putty needs to come out.</p>
+  <ol>{frontalSteps.map((s) => <li>{s}</li>)}</ol>
+  <Image src={frontalInstall} alt="Diagram of the Nu-Glaze frontal installation method with adhesive spread over the existing glass" widths={[657]} class="w-full max-w-[560px] bg-white" />
+
+  <h2>Need the full technical data?</h2>
+  <p>The <a href="/downloads/">technical data sheet and product range</a> are free to download, and the installation manual is supplied at point of purchase. For anything not covered here, see <a href="/faq/">Tips, tricks & FAQ</a> or contact technical support.</p>
+</Guide>

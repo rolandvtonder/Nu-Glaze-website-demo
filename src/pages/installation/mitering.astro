@@ -1,0 +1,47 @@
+---
+import {Image} from 'astro:assets';
+import Guide from '../../layouts/Guide.astro';
+import {featured} from '../../data/gallery';
+import principle from '../../assets/brand/measure-principle.png';
+import sideView from '../../assets/brand/side-view.png';
+---
+
+<Guide
+  title="Mitering & Cutting Nu-Glaze Profiles — Best-Practice Method"
+  description="How to measure and mitre Nu-Glaze uPVC glazing profiles: the 'tight measure minus 3 mm' rule, cutting order and how the corners overlap to shed water."
+  kicker="Technical guide"
+  lines={[{t: 'Tight measure,'}, {t: 'minus 3 mm.', i: true}]}
+  intro="The best-practice way to cut and mitre Nu-Glaze profiles so the corners close tight and every joint sheds water outwards."
+  image={featured.mitreDemo}
+  crumbs={[{name: 'Installation', href: '/installation/'}, {name: 'Mitering & cutting', href: '/installation/mitering/'}]}
+>
+  <h2>Measure from the inside of the frame</h2>
+  <p>Every measurement is a <strong>tight measure</strong>: the exact inside dimension of the frame, with no allowance added.</p>
+  <table>
+    <thead><tr><th scope="col">Piece</th><th scope="col">Position</th><th scope="col">Length</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Base (goes in first, underneath)</td><td>Exact inside measurement</td></tr>
+      <tr><td>2 & 3</td><td>Sides</td><td>Inside measurement minus 3 mm</td></tr>
+      <tr><td>4</td><td>Top (goes in last, on top)</td><td>Inside measurement minus 3 mm</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <Image src={principle} alt="Diagram of the tight measure minus 3 mm principle showing pieces 1 to 4 and which corners go under and over" widths={[538]} class="w-full max-w-[538px] bg-white" />
+    <figcaption class="caps mt-3 text-ink/55">Piece 1 first, piece 4 last — the 45° corners overlap the 50–60° ones</figcaption>
+  </figure>
+
+  <h2>Why the corners are different angles</h2>
+  <p>The top and bottom pieces are cut at 45°. The sides are cut at 50–60°, so each side's corner tucks <em>under</em> the top piece and <em>over</em> the bottom piece. That forms a single seam that sheds water outwards instead of channelling it into the joint.</p>
+  <p>Any angle from 50° to 90° will work on the sides — just make sure the cut doesn't collide with the back end of the profile.</p>
+  <figure>
+    <Image src={sideView} alt="Side view diagram: the top piece underlaps the sides, the sides overlap the bottom piece" widths={[428]} class="w-full max-w-[428px] bg-white" />
+  </figure>
+
+  <h2>Tips for a clean cut</h2>
+  <ul>
+    <li>Keep the profile flat on the anvil of the cutter throughout the cut.</li>
+    <li>The <a href="/products/#accessories">MSX-1 mitre cutter</a> is fastest and leaves no burrs, but any mitre tool will do.</li>
+    <li>If corners don't quite meet, rotate the profiles while the silicone is still wet until the 45° faces line up.</li>
+    <li>Cut bottom, sides, then top — longest pieces first from full 2.4 m lengths.</li>
+  </ul>
+</Guide>

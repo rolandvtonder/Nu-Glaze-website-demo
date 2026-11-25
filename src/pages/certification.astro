@@ -1,0 +1,51 @@
+---
+import {Image} from 'astro:assets';
+import Guide from '../layouts/Guide.astro';
+import {featured} from '../data/gallery';
+import {site} from '../data/site';
+import sabs from '../assets/brand/sabs.png';
+import sagga from '../assets/brand/sagga.jpg';
+import testing from '../assets/brand/testing.jpg';
+---
+
+<Guide
+  title="Certification — SANS 613 A3 Rated, SABS Tested Glazing"
+  description="Nu-Glaze is SANS 613 compliant with an A3 rating, tested by SABS and AAAMSA laboratories, compliant with SANS 10400-XA and a member of SAGGA. Certificates available on request."
+  kicker="Certification"
+  lines={[{t: 'Tested.'}, {t: 'Rated A3.', i: true}]}
+  intro="Independent laboratory testing to South African National Standards — so specifiers, contractors and home-owners can rely on it."
+  image={featured.heritageColumns}
+  crumbs={[{name: 'Certification', href: '/certification/'}]}
+  group="info"
+>
+  <div class="not-prose flex flex-wrap items-center gap-10 bg-white p-8">
+    <Image src={sabs} alt="SABS approved logo" widths={[220]} class="h-auto w-[160px]" />
+    <Image src={sagga} alt="South African Glass and Glazing Association (SAGGA) logo" widths={[255]} class="h-auto w-[150px]" />
+  </div>
+
+  <h2>Standards & results</h2>
+  <ul>
+    <li><strong>SANS 613 — A3 rating.</strong> Tested by SABS and AAAMSA. The minimum required for domestic buildings is A1.</li>
+    <li><strong>SANS 10400-XA</strong> compliant (energy usage in buildings).</li>
+    <li><strong>Tested in SABS laboratories.</strong> No water, air or dust leakage through the glazing.</li>
+    <li><strong>Water and air pressure above 2,000 Pa</strong> for 15-minute sessions did not dislodge the system; no air leakage at 75 Pa.</li>
+    <li><strong>Silicone</strong> tested at CSIR Pretoria (Firelab), witnessed by AAAMSA and SABS, achieving A3 against SANS 613.</li>
+    <li><strong>Industry membership:</strong> the South African Glass and Glazing Association (SAGGA).</li>
+  </ul>
+
+  <h2>Quality assurance</h2>
+  <ul>
+    <li>Premium neutral-cure silicone and an engineered uPVC compound.</li>
+    <li>Documented installation processes — testing followed the official installation manual.</li>
+    <li>Regular quality inspections and OEM compliance.</li>
+  </ul>
+
+  <figure>
+    <Image src={testing} alt="A Nu-Glaze glazed test panel set up for pressure testing at Saffiera" widths={[465]} class="w-full max-w-[465px]" />
+    <figcaption class="caps mt-3 text-ink/55">Product testing at Saffiera</figcaption>
+  </figure>
+
+  <h2>Request certificates</h2>
+  <p>Copies of test reports and certificates are available on request for specifiers, architects, insurers and project managers. Email <a href={`mailto:${site.email}?subject=${encodeURIComponent('Certificate request')}`}>{site.email}</a> with your project name.</p>
+  <p>See also: <a href="/warranty/">warranty information</a> and the <a href="/downloads/">technical data sheet</a>.</p>
+</Guide>

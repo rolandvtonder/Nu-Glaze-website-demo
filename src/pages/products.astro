@@ -1,0 +1,178 @@
+---
+import {Image} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import {featured, photo} from '../data/gallery';
+import {accessories, profiles, series, site} from '../data/site';
+import profileImg from '../assets/brand/profile.png';
+import msx from '../assets/brand/msx1.png';
+import spacers from '../assets/brand/spacers.jpg';
+
+const swatch: Record<string, string> = {White: '#f7f7f5', Black: '#151515', 'Dove grey': '#8c8f8f'};
+const seriesProfiles = (id: string) => profiles.filter((p) => (id === 'w4' ? p.code.startsWith('W') : p.code.startsWith('S') && p.code.endsWith(id === 's4' ? '4' : '7')));
+const seriesImg = {s4: featured.steelCorner, s7: featured.reeded, w4: featured.timberRestored};
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Nu-Glaze product range',
+  itemListElement: [...profiles.map((p) => ({name: `Nu-Glaze ${p.code} glazing profile — ${p.colour}`, sku: p.code, desc: `uPVC clip-in glazing profile in ${p.colour.toLowerCase()} for ${p.glass} glass. Toe height ${p.toe}, rebate depth ${p.rebate}. Supplied in 2.4 m lengths.`, color: p.colour})), ...accessories.map((a) => ({name: a.name, sku: a.code, desc: a.use, color: undefined}))].map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {'@type': 'Product', name: p.name, sku: p.sku, description: p.desc, color: p.color, brand: {'@type': 'Brand', name: 'Nu-Glaze'}, manufacturer: {'@id': `${site.url}/#business`}},
+  })),
+};
+---
+
+<Base
+  title="Products — Nu-Glaze uPVC Glazing Profiles, Silicone & Tools"
+  description="The Nu-Glaze range: S4, S7 and W4 uPVC glazing profiles in white, black and dove grey for 3–6.38 mm glass, plus neutral-cure silicone, siliconized acrylic, spacers and the MSX-1 mitre cutter."
+  crumbs={[{name: 'Products', href: '/products/'}]}
+  schema={[productSchema]}
+>
+  <PageHero
+    kicker="The Nu-Glaze® system"
+    lines={[{t: 'Eight profiles.'}, {t: 'Three colours.', i: true}, {t: 'One finish.'}]}
+    intro="A modern answer to traditional window putty: UV-stabilised uPVC profiles in 2.4 m lengths, bonded with neutral-cure silicone and finished with siliconized acrylic."
+    image={featured.profiles}
+    crumbs={[{name: 'Products', href: '/products/'}]}
+  />
+
+  <!-- How it works -->
+  <section class="bg-paper">
+    <div class="mx-auto grid max-w-[1680px] items-center gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-2 lg:gap-24">
+      <div data-reveal>
+        <Image src={profileImg} alt="Cross-section of a Nu-Glaze profile seated in a frame rebate, showing silicone spread on the inside and outside of the glass" widths={[443]} class="mx-auto w-full max-w-[443px]" />
+      </div>
+      <div>
+        <p class="caps text-red" data-reveal>How it works</p>
+        <h2 class="display mt-5 text-[clamp(40px,5vw,84px)]" data-reveal><span class="block">A 45° slope</span><span class="it block text-steel">over a 90° joint.</span></h2>
+        <p class="mt-8 max-w-[56ch] text-ink/80" data-reveal>
+          The profile clips over the edge of the glass and is bonded into the frame rebate with construction-grade neutral-cure silicone. The inside silicone can't be reached from outside, and the outer face forms a clean 45° slope that sheds water away from the joint.
+        </p>
+        <p class="mt-5 max-w-[56ch] text-ink/80" data-reveal>
+          The uPVC compound wasn't available off the shelf. It was developed with Sasol Polymers' Technology Service Centre, Sun Ace South Africa, Alpha Plast and other partners, and put through accelerated weathering beyond the equivalent of 21 years with no deterioration. The current formula uses the RX328 UV stabiliser in place of the earlier RX500 — at extra cost, because it performs better.
+        </p>
+        <p class="display it mt-8 text-[28px] text-red" data-reveal>“Never settle for the minimum when you can engineer for more.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Series -->
+  {
+    series.map((s, i) => (
+      <section id={s.id} class:list={['scroll-mt-24', i % 2 ? 'bg-stone' : 'bg-white']} aria-labelledby={`${s.id}-title`}>
+        <div class="mx-auto grid max-w-[1680px] gap-12 px-5 py-24 md:px-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <div class:list={['relative', {'lg:order-2': i % 2}]} data-reveal>
+            <Image src={seriesImg[s.id].img} alt={seriesImg[s.id].alt} widths={[500, 900, 1300]} sizes="(min-width:1024px) 45vw, 100vw" class="aspect-[4/3] w-full object-cover" />
+            <span class="display absolute top-0 left-0 px-5 py-3 text-[40px] text-white" style={`background:${s.tint}`}>{s.name[0]}</span>
+          </div>
+          <div>
+            <p class="caps text-red" data-reveal>{s.title}</p>
+            <h2 id={`${s.id}-title`} class="display mt-4 text-[clamp(44px,5vw,84px)]" data-reveal>
+              <span class="block">{s.name[0]}</span>
+              <span class="it block text-steel">{s.name[1]}</span>
+            </h2>
+            <p class="mt-6 max-w-[54ch] text-ink/80" data-reveal>{s.blurb}</p>
+            <dl class="mt-8 grid max-w-[520px] grid-cols-2 gap-x-8 gap-y-4" data-reveal>
+              {s.specs.map(([k, v]) => (
+                <div class="border-t border-line pt-3">
+                  <dt class="caps text-ink/55">{k}</dt>
+                  <dd class="mt-1 text-[17px] font-medium">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <ul class="mt-8 flex flex-wrap gap-3" data-reveal aria-label={`${s.name[0]} order codes`}>
+              {seriesProfiles(s.id).map((p) => (
+                <li class="flex items-center gap-3 border border-line bg-white py-2 pr-4 pl-2">
+                  <span class="block size-7 border border-ink/20" style={`background:${swatch[p.colour]}`} aria-hidden="true" />
+                  <span>
+                    <span class="block font-semibold">{p.code}</span>
+                    <span class="block text-[13px] text-ink/60">{p.colour}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Full range table -->
+  <section class="bg-paper" aria-labelledby="range-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <h2 id="range-title" class="display text-[clamp(40px,5vw,84px)]" data-reveal><span class="block">The full</span><span class="it block text-red">2026 range.</span></h2>
+      <div class="mt-12 overflow-x-auto" data-reveal data-lenis-prevent>
+        <table class="w-full min-w-[720px] border-collapse text-left text-[15px]">
+          <caption class="sr-only">Nu-Glaze profiles with order code, colour, glass thickness, toe height and rebate depth</caption>
+          <thead class="caps border-b-2 border-ink text-ink/70">
+            <tr><th scope="col" class="py-3 pr-4">Order code</th><th scope="col" class="py-3 pr-4">Colour</th><th scope="col" class="py-3 pr-4">Glass thickness</th><th scope="col" class="py-3 pr-4">Toe height</th><th scope="col" class="py-3 pr-4">Rebate depth</th></tr>
+          </thead>
+          <tbody>
+            {
+              profiles.map((p) => (
+                <tr class="border-b border-line">
+                  <th scope="row" class="py-4 pr-4 font-semibold">{p.code}</th>
+                  <td class="py-4 pr-4"><span class="mr-2 inline-block size-3.5 border border-ink/20 align-[-2px]" style={`background:${swatch[p.colour]}`} aria-hidden="true" />{p.colour}</td>
+                  <td class="py-4 pr-4">{p.glass}</td>
+                  <td class="py-4 pr-4">{p.toe}</td>
+                  <td class="py-4 pr-4">{p.rebate}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 max-w-[70ch] text-[15px] text-ink/65" data-reveal>
+        All profiles are supplied in 2.4 m lengths; custom lengths are available subject to minimum order quantities. <strong>Toe height</strong> is the height of the frame lip on the outside of the glass; <strong>rebate depth</strong> is the depth of the recess the glass sits in. Shapes, sizes, volumes and colours may change with availability or upgrades.
+      </p>
+
+      <div class="mt-16 grid gap-px bg-line md:grid-cols-3" data-reveal>
+        <div class="bg-paper p-8"><p class="caps text-green">Frames</p><p class="mt-3">Steel (including F4B hollow sections), timber, concrete and polycrete.</p></div>
+        <div class="bg-paper p-8"><p class="caps text-green">Panels</p><p class="mt-3">Glass, polycarbonate or plywood from 2 mm to 6.38 mm for full installs. No thickness limit for frontal installs.</p></div>
+        <div class="bg-paper p-8"><p class="caps text-green">Other uses</p><p class="mt-3">Quarter-round trim in kitchens and bathrooms, closing gaps, routing thin wires, securing panels and waterproofing.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accessories -->
+  <section id="accessories" class="on-dark scroll-mt-24 bg-ink text-white" aria-labelledby="acc-title">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-[1fr_1.3fr]">
+      <div>
+        <h2 id="acc-title" class="display text-[clamp(40px,5vw,84px)]" data-reveal><span class="block">Tools &</span><span class="it block text-glass">consumables.</span></h2>
+        <div class="mt-10 bg-white p-6" data-reveal><Image src={msx} alt="Nu-Glaze MSX-1 Mitre Shears-Xpert cutter" widths={[400]} class="w-full" /></div>
+        <Image src={spacers} alt="White ABS spacers fitted along an F4B steel window section before glazing" widths={[500, 900]} sizes="(min-width:1024px) 35vw, 100vw" class="mt-[3px] aspect-[4/3] w-full object-cover" data-reveal />
+      </div>
+      <ul class="divide-y divide-white/15 border-y border-white/15">
+        {
+          accessories.map((a, i) => (
+            <li class="grid gap-2 py-7 sm:grid-cols-[130px_1fr]" data-reveal style={`--d:${i * 0.05}s`}>
+              <span class="caps text-glass">{a.code}</span>
+              <div>
+                <h3 class="display text-[26px]">{a.name}</h3>
+                <p class="mt-2 text-white/75">{a.use}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Buy -->
+  <section class="bg-paper">
+    <div class="mx-auto grid max-w-[1680px] gap-12 px-5 py-24 md:px-14 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+      <div data-reveal>
+        <p class="caps text-red">Where to buy</p>
+        <h2 class="display mt-4 text-[clamp(40px,4.6vw,76px)]"><span class="block">Delivered</span><span class="it block text-steel">to your door.</span></h2>
+        <p class="mt-6 max-w-[56ch] text-ink/80">Nu-Glaze is sold direct with delivery anywhere in South Africa and for export. Email your profile code and quantity with your delivery details and we'll send a quote. Prices can change, so every order is quoted at the time.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact/" class="btn btn-red">Request a quote</a>
+          <a href="/downloads/" class="btn btn-ghost">Data sheet & range PDF</a>
+        </div>
+      </div>
+      <Image src={photo(205)} alt="Hand holding Nu-Glaze profile samples, including the black WBL4" widths={[500, 900]} sizes="(min-width:1024px) 40vw, 100vw" class="aspect-square w-full object-cover" data-reveal />
+    </div>
+  </section>
+</Base>

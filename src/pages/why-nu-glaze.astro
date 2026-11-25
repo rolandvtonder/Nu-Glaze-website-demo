@@ -1,0 +1,166 @@
+---
+import {Image} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import {featured, photo} from '../data/gallery';
+import {site} from '../data/site';
+import vsPutty from '../assets/brand/vs-putty.jpg';
+
+const rows = [
+  ['Lifespan', 'Typically 2–5 years before cracking and crumbling', 'In the field since 2012 with no deterioration recorded'],
+  ['Security', 'Can be dug out and the pane lifted from outside', 'Bonded from inside — the pane has to be broken to get in'],
+  ['Maintenance', 'Re-puttying, sanding and repainting', 'Wipe clean; paint only if you want a colour'],
+  ['Curing', '7–14 days before it can be painted', 'None — paint or leave as is straight away'],
+  ['Finish', 'Hand-tooled, uneven, messy', 'A crisp, factory-straight 45° line'],
+  ['Pests', 'Birds and insects pick at it', 'Hard uPVC they can’t damage'],
+];
+
+const alternatives = [
+  {t: 'Clay putty', pts: ['Short life — dries, cracks and crumbles', '7–14 days before it can be painted', 'Constant maintenance', 'Easy for burglars to dig out']},
+  {t: 'Wood beading', pts: ['Rots and swells with moisture', 'Needs sanding and repainting', 'Pinned beads are a forced-entry target', 'High upkeep over the life of the window']},
+  {t: 'The hidden costs', pts: ['Repeat re-glazing and callouts', 'Break-ins and stolen equipment', 'Water damage around frames', 'Higher insurance risk']},
+];
+
+const benefits = [
+  ['Enhanced security', 'The silicone bond sits on the inside face, so the pane can only be released from inside the building.'],
+  ['Long-lasting', 'UV-stabilised uPVC and construction-grade neutral-cure silicone — tested by accelerated weathering beyond 21 years equivalent.'],
+  ['The 45° finish', 'Sheds water instead of pooling it, and looks sharp on every pane.'],
+  ['Heritage-friendly', 'Keeps original steel and timber frames in service — including a 300-year-old building in Franschhoek.'],
+  ['Quick to install', 'No curing time, less scaffolding time, interior installs possible with suction cups, and it can go in during light rain or heat.'],
+  ['Cost-effective', 'Fewer snags and callbacks, faster sign-off for contractors, and no re-glazing cycle for owners.'],
+];
+---
+
+<Base
+  title="Why Nu-Glaze? Nu-Glaze vs Window Putty & Wood Beading"
+  description="Why Nu-Glaze beats clay putty and wood beading: burglar-resistant bonding, no curing time, a clean 45° finish and proven durability. Comparison table and case studies."
+  crumbs={[{name: 'Why Nu-Glaze', href: '/why-nu-glaze/'}]}
+>
+  <PageHero
+    kicker="Why Nu-Glaze®"
+    lines={[{t: 'Secure glazing'}, {t: 'that outlasts', i: true}, {t: 'putty.'}]}
+    intro="Putty and beading have had a century. Here's what changes when the glass is held by an engineered uPVC profile instead."
+    image={featured.puttyFailing}
+    crumbs={[{name: 'Why Nu-Glaze', href: '/why-nu-glaze/'}]}
+  />
+
+  <!-- Alternatives -->
+  <section class="bg-paper" aria-labelledby="alt-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <p class="caps text-red" data-reveal>The old ways</p>
+      <h2 id="alt-title" class="display mt-5 text-[clamp(44px,5.6vw,96px)]" data-reveal><span class="block">What putty &</span><span class="it block text-steel">beading cost you.</span></h2>
+      <div class="mt-14 grid gap-px bg-line md:grid-cols-3">
+        {
+          alternatives.map((a, i) => (
+            <div class="bg-paper p-8 md:p-10" data-reveal style={`--d:${i * 0.08}s`}>
+              <h3 class="display text-[34px]">{a.t}</h3>
+              <ul class="mt-5 space-y-3">
+                {a.pts.map((p) => (
+                  <li class="flex gap-3 text-ink/80">
+                    <span class="mt-[0.55em] block size-2 shrink-0 bg-red" aria-hidden="true" />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section class="on-dark bg-ink text-white" aria-labelledby="compare-title">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-24 md:px-14 md:py-32 lg:grid-cols-[1fr_1.5fr]">
+      <div>
+        <h2 id="compare-title" class="display text-[clamp(44px,5.6vw,96px)]" data-reveal><span class="block">Side</span><span class="it block text-glass">by side.</span></h2>
+        <Image src={vsPutty} alt="Comparison image: a window glazed with Nu-Glaze next to a window with traditional putty" widths={[500, 900]} sizes="(min-width:1024px) 35vw, 100vw" class="mt-10 w-full" data-reveal />
+      </div>
+      <div class="overflow-x-auto" data-reveal data-lenis-prevent>
+        <table class="w-full min-w-[560px] border-collapse text-left">
+          <caption class="sr-only">Traditional putty compared with Nu-Glaze</caption>
+          <thead class="caps border-b border-white/30 text-white/60">
+            <tr><th scope="col" class="py-4 pr-4"><span class="sr-only">Feature</span></th><th scope="col" class="py-4 pr-4">Traditional putty</th><th scope="col" class="py-4 text-glass">Nu-Glaze</th></tr>
+          </thead>
+          <tbody>
+            {
+              rows.map(([k, a, b]) => (
+                <tr class="border-b border-white/15 align-top">
+                  <th scope="row" class="display py-5 pr-4 text-[22px]">{k}</th>
+                  <td class="py-5 pr-6 text-white/60">{a}</td>
+                  <td class="py-5 text-white">{b}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security / case studies -->
+  <section id="security" class="scroll-mt-24 bg-paper" aria-labelledby="sec-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <p class="caps text-red" data-reveal>Security</p>
+          <h2 id="sec-title" class="display mt-5 text-[clamp(44px,5.6vw,96px)]" data-reveal><span class="block">Break the glass</span><span class="it block text-steel">or stay outside.</span></h2>
+          <p class="mt-8 max-w-[52ch] text-ink/80" data-reveal>
+            The silicone bonding pattern inside a Nu-Glaze profile makes it almost impossible to remove a pane without breaking it — and getting to the bond means already being inside the building. Soft putty and pinned beads offer burglars a quiet way in; Nu-Glaze doesn't.
+          </p>
+        </div>
+        <ol class="space-y-[3px]">
+          <li class="bg-white p-8 md:p-10" data-reveal>
+            <p class="caps text-green">Case 01 · West Coast</p>
+            <h3 class="display mt-3 text-[32px]">Two schools, one method</h3>
+            <p class="mt-3 text-ink/80">A nursery school was burgled twice in two weeks. At a primary school, intruders removed putty that hadn't yet set, lifted the panes and took around R10,000 of equipment. (Reported by the Weslander.)</p>
+          </li>
+          <li class="bg-white p-8 md:p-10" data-reveal>
+            <p class="caps text-green">Case 02 · Residential</p>
+            <h3 class="display mt-3 text-[32px]">Glass held by rubber</h3>
+            <p class="mt-3 text-ink/80">Burglars removed aluminium-framed panes held only by rubber gaskets — in some cases while the occupants slept. (Reported by the Weslander.)</p>
+          </li>
+          <li class="on-dark bg-slate p-8 text-white md:p-10" data-reveal>
+            <p class="caps text-glass">Case 03 · Western Cape</p>
+            <h3 class="display mt-3 text-[32px]">Pollsmoor: 101 panes</h3>
+            <p class="mt-3 text-white/80">At the invitation of Director Ivan Govender, Pollsmoor correctional facility had 101 windowpanes glazed with Nu-Glaze to test its durability against its cost.</p>
+            <a href={site.docs.pollsmoor} class="caps mt-6 inline-flex min-h-11 items-center gap-2 border-b border-white/40 hover:border-white" target="_blank" rel="noopener">Read the article (PDF) <span aria-hidden="true">→</span></a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Six benefits -->
+  <section class="bg-stone" aria-labelledby="ben-title">
+    <div class="mx-auto max-w-[1680px] px-5 py-24 md:px-14 md:py-32">
+      <h2 id="ben-title" class="display text-[clamp(44px,5.6vw,96px)]" data-reveal><span class="block">Six reasons</span><span class="it block text-red">to switch.</span></h2>
+      <ul class="mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {
+          benefits.map(([t, d], i) => (
+            <li class="bg-stone p-8 md:p-10" data-reveal style={`--d:${(i % 3) * 0.06}s`}>
+              <span class="display text-[44px] text-red">0{i + 1}</span>
+              <h3 class="display mt-2 text-[30px]">{t}</h3>
+              <p class="mt-3 text-ink/75">{d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Before/after strip -->
+  <section class="on-dark bg-ink text-white" aria-label="Before and after photos">
+    <div class="grid grid-cols-2 gap-[3px] md:grid-cols-4">
+      {
+        [photo(208), photo(60), photo(34), photo(43)].map((img, i) => (
+          <Image src={img} alt={['Old, failed putty on a timber window before re-glazing', 'After: Nu-Glaze — no more putty, no more wood beadings', 'Before: a timber window with failing putty', 'After: the same window re-glazed with Nu-Glaze'][i]} widths={[400, 700]} sizes="(min-width:768px) 25vw, 50vw" class="aspect-square w-full object-cover" data-reveal style={`--d:${i * 0.06}s`} />
+        ))
+      }
+    </div>
+    <div class="mx-auto flex max-w-[1680px] flex-wrap items-center justify-between gap-6 px-5 py-12 md:px-14">
+      <p class="display text-[clamp(30px,3vw,48px)]">See 200+ real jobs.</p>
+      <a href="/projects/" class="btn btn-ghost">Projects gallery <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</Base>

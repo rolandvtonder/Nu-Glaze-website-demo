@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import {featured} from '../data/gallery';
+
+type QA = {id: string; q: string; a: string};
+const faqs: QA[] = [
+  {id: 'removal', q: 'Can Nu-Glaze be removed once the silicone has cured?', a: 'Not from outside without breaking the glass — that is the point. With the right amount of silicone in the right place, the bond can only be reached from inside the building.'},
+  {id: 'f4b', q: 'Can I use Nu-Glaze on F4B hollow steel sections?', a: 'Yes, as long as the surface is flat and at 90° to the glass. Pack the hollow with hard plastic spacers every 300–500 mm, or leave sound existing putty in the recess. Nu-Glaze spacer sets are 3 × 12 × 35 mm white ABS.'},
+  {id: 'old-putty', q: 'Do I have to remove all the existing putty?', a: 'Only for a full installation. For a frontal installation the glass stays in and you only remove the outer triangular section of putty.'},
+  {id: 'mitre-tool', q: 'Can I use any mitre tool?', a: 'Yes. The MSX-1 mitre cutter is the fastest and leaves no burrs, but any mitre saw or cutter that keeps the profile flat will work.'},
+  {id: 'corners', q: "What if the corners don't meet?", a: 'While the silicone is still wet, rotate the profiles slightly until the 45° faces line up. The mitering guide explains how to cut so this rarely happens.'},
+  {id: 'toe', q: 'My frame’s toe height is only 10 mm. Will it fit?', a: 'S7 profiles have a score line along the back so you can snap them down for low toe heights. S4 and W4 profiles don’t need it.'},
+  {id: 'silicone', q: 'Can I use any silicone or adhesive?', a: 'Use neutral-cure silicone. Other adhesives can attack the frame or profile and their performance isn’t guaranteed.'},
+  {id: 'strength', q: 'How strong is the bond over time?', a: 'Neutral-cure silicone is low-modulus and construction grade, meeting ASTM C920 Type S, Grade NS, Class 25, Use T, NT, A and G. In long-term desert exposure testing it was the adhesive that kept its strength. The full technical data sheet is available on request.'},
+  {id: 'other-uses', q: 'What else can Nu-Glaze profiles be used for?', a: 'Quarter-round trim in kitchens and bathrooms, routing thin wires, securing panels, waterproofing and sealing gaps.'},
+  {id: 'thick-glass', q: 'What about glass thicker than 6.38 mm, or double-glazed units?', a: 'Use a "deconstructed" full installation, with a bead of silicone at each stage. It also suits heritage glass that can’t be trimmed. Works with W4, S4 and S7 profiles.'},
+  {id: 'environment', q: 'Is uPVC environmentally friendly?', a: 'The Nu-Glaze compound is outdoor-grade, UV-stabilised and free of heavy-metal heat stabilisers, and uPVC can be recycled several times. Because the profiles outlast putty and keep original frames in service, far less material ends up being replaced.'},
+  {id: 'measure', q: 'How do I measure how much I need?', a: 'For each rectangular pane: 2 × (height + width), adding 20 mm per length for mitre cuts. Add up all panes and round up to whole 2.4 m lengths.'},
+  {id: 'custom', q: 'Can I get custom lengths?', a: 'Yes, subject to minimum order quantities.'},
+  {id: 'buy', q: 'Where can I buy Nu-Glaze?', a: 'Directly from us, with delivery. We are in discussion with DIY retailers, but for now contact us for a quote.'},
+  {id: 'broken', q: 'What happens if the glass breaks?', a: 'The profiles can usually be removed, cleaned and reused with new glass. Remove the shards, cut the silicone bond, release the top, then the sides, then the bottom, and scrape out the old silicone.'},
+  {id: 'paint', q: 'Can I paint Nu-Glaze?', a: 'Yes. Lightly key the surface with 200-grit sandpaper or a scouring pad and paint. Water-based exterior acrylic gives the best results; test solvent-based paints on an offcut first. White, black and dove-grey profiles don’t need painting at all.'},
+  {id: 'damage', q: 'What if the outer face gets damaged?', a: 'It takes significant force to break, and even then the inner structure and silicone keep holding the glass. Damage can be plastic-welded, or the section replaced using the frontal method.'},
+];
+
+const savings = [
+  'Faster installation and a cleaner finish',
+  'No painting needed for white, black or dove-grey profiles',
+  'Paint immediately if you do want a colour — no curing wait',
+  'Less time on scaffolding; interior installs possible with suction cups',
+  'Fewer snags, safer installs and quicker sign-off',
+  'Cut profiles in the workshop ahead of time',
+  'Install in light rain or heat',
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({'@type': 'Question', name: f.q, acceptedAnswer: {'@type': 'Answer', text: f.a}})),
+};
+---
+
+<Base
+  title="Tips, Tricks & FAQ — Nu-Glaze Glazing Questions Answered"
+  description="Answers to 17 common Nu-Glaze questions: F4B steel, removing putty, mitering, silicone, painting, thick glass, broken glass, measuring and where to buy. Plus money-saving tips."
+  crumbs={[{name: 'Tips & FAQ', href: '/faq/'}]}
+  schema={[faqSchema]}
+>
+  <PageHero
+    kicker="Tips, tricks & FAQ"
+    lines={[{t: 'Ask Johan.'}, {t: "He's heard it.", i: true}]}
+    intro="Seventeen questions installers and home-owners ask most — plus how to estimate material and where Nu-Glaze saves money."
+    image={featured.frontal}
+    crumbs={[{name: 'Tips & FAQ', href: '/faq/'}]}
+  />
+
+  <section class="bg-paper">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 py-20 md:px-14 md:py-28 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+      <aside class="space-y-[3px] lg:sticky lg:top-28 lg:self-start">
+        <div id="estimate" class="scroll-mt-28 bg-white p-8" data-reveal>
+          <p class="caps text-red">Tip · estimating material</p>
+          <h2 class="display mt-3 text-[34px]">Measure the perimeter, not the m²</h2>
+          <p class="mt-3 text-ink/80">Add up the perimeter of every pane, add 10% for cutting waste, then round up to whole 2.4 m lengths.</p>
+          <p class="mt-4 border-l-2 border-red pl-4 text-[15px] text-ink/70">Three panes with perimeters of 1.5 m, 2.1 m and 2.7 m = 6.3 m. Plus 10% ≈ 6.93 m. Order 3 × 2.4 m = 7.2 m.</p>
+        </div>
+        <div class="on-dark bg-ink p-8 text-white" data-reveal>
+          <p class="caps text-glass">Where Nu-Glaze saves money</p>
+          <ul class="mt-4 space-y-2 text-[15px] text-white/80">
+            {savings.map((s) => <li class="flex gap-3"><span class="mt-[0.6em] block size-1.5 shrink-0 bg-glass" aria-hidden="true" />{s}</li>)}
+          </ul>
+        </div>
+      </aside>
+
+      <div>
+        <h2 class="display text-[clamp(40px,4.6vw,76px)]" data-reveal><span class="block">Frequently</span><span class="it block text-red">asked.</span></h2>
+        <div class="mt-10 border-t border-line">
+          {
+            faqs.map((f, i) => (
+              <details id={f.id} class="group scroll-mt-28 border-b border-line py-6">
+                <summary class="flex cursor-pointer list-none items-start justify-between gap-6 text-[19px] font-medium">
+                  <span><span class="caps mr-3 text-ink/40">{String(i + 1).padStart(2, '0')}</span>{f.q}</span>
+                  <span class="display text-[28px] leading-none text-red transition-transform duration-300 group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-4 max-w-[64ch] pl-10 text-ink/75">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+        <p class="mt-10 text-ink/75">More detail in the <a href="/installation/" class="text-red underline underline-offset-4">installation guide</a>, <a href="/installation/mitering/" class="text-red underline underline-offset-4">mitering guide</a> and <a href="/downloads/" class="text-red underline underline-offset-4">technical data sheet</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Deep links like /faq/#thick-glass open the matching answer.
+    const open = () => {
+      const el = location.hash && document.querySelector<HTMLDetailsElement>(`details${location.hash}`);
+      if (el) el.open = true;
+    };
+    open();
+    window.addEventListener('hashchange', open);
+  </script>
+</Base>

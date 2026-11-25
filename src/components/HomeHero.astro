@@ -1,0 +1,60 @@
+---
+import {Picture} from 'astro:assets';
+import {featured} from '../data/gallery';
+
+/** Headline lines; `i` lines are set in italic. */
+const lines = [
+  {t: "It's not"},
+  {t: 'putty.', i: true},
+  {t: "It's"},
+  {t: 'Nu-Glaze.', i: true},
+];
+const slides = [featured.livingRoom, featured.shopfront, featured.timberRestored, featured.heritage];
+---
+
+<!--
+  Crossfading project photos with a slow push-in, under the headline. As you
+  scroll on, the stage blurs, dims and pulls back (site.ts → hero()).
+-->
+<section data-hero class="on-dark relative h-svh min-h-[640px] overflow-hidden bg-ink text-white">
+  <div data-stage class="absolute inset-0 origin-center will-change-transform">
+    {
+      slides.map((s, i) => (
+        <div class:list={['slide absolute inset-0 overflow-hidden', {'is-on': i === 0}]} aria-hidden={i === 0 ? undefined : 'true'}>
+          <Picture
+            src={s.img}
+            alt={i === 0 ? s.alt : ''}
+            widths={[640, 1024, 1600, 2048]}
+            sizes="100vw"
+            formats={['avif', 'webp']}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            class="h-full w-full object-cover"
+          />
+        </div>
+      ))
+    }
+    <div class="absolute inset-0 bg-[linear-gradient(90deg,rgb(17_22_26/0.72),rgb(17_22_26/0.2)_60%),linear-gradient(0deg,rgb(17_22_26/0.6),transparent_40%)]"></div>
+
+    <div class="absolute inset-0 mx-auto max-w-[1680px] px-5 pt-[clamp(100px,13vh,160px)] md:px-14">
+      <p class="caps text-glass">Patented uPVC glazing system · Since 2007</p>
+      <h1 class="display mt-5 text-[clamp(56px,8.4vw,156px)] drop-shadow-[0_4px_30px_rgb(0_0_0/0.35)]">
+        <span class="sr-only">Nu-Glaze: the uPVC alternative to window putty. </span>
+        {
+          lines.map((l, i) => (
+            <span aria-hidden="true" class:list={['block', {it: l.i, 'text-red': l.i && i === 3, 'pl-[1.4em]': i === 2}]}>
+              {l.t}
+            </span>
+          ))
+        }
+      </h1>
+      <p class="mt-8 ml-[clamp(0px,18vw,330px)] max-w-[420px] text-[17px] text-white/85 max-md:ml-0">
+        A clip-in uPVC profile, bonded with neutral-cure silicone, that replaces window putty and wood beading on steel, timber and concrete frames. No curing, no cracking, no re-puttying — and glass that can't be lifted out from outside.
+      </p>
+      <div class="mt-8 ml-[clamp(0px,18vw,330px)] flex flex-wrap gap-3 max-md:ml-0">
+        <a href="/why-nu-glaze/" class="btn bg-white text-ink hover:bg-glass">Why it beats putty</a>
+        <a href="/products/" class="btn btn-ghost">See the range</a>
+      </div>
+    </div>
+  </div>
+</section>

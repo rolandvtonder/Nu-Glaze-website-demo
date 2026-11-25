@@ -1,0 +1,41 @@
+---
+import Guide from '../layouts/Guide.astro';
+import {featured} from '../data/gallery';
+import {site} from '../data/site';
+---
+
+<!-- Plain-language POPIA notice. Have it reviewed against the business's own data practices before launch. -->
+<Guide
+  title="Privacy Notice (POPIA)"
+  description="How Nu-Glaze collects, uses and protects personal information under the Protection of Personal Information Act (POPIA)."
+  kicker="Privacy"
+  lines={[{t: 'Your details,'}, {t: 'kept private.', i: true}]}
+  intro="How Nu-Glaze handles personal information under the Protection of Personal Information Act, 2013 (POPIA)."
+  image={featured.steelCorner}
+  crumbs={[{name: 'Privacy', href: '/privacy/'}]}
+  group="info"
+>
+  <h2>Who we are</h2>
+  <p>Nu-Glaze ({site.locality}, {site.region}, South Africa) is the responsible party for personal information collected through this website and our sales channels. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li>Details you choose to send us — your name, phone number, email address, location and information about your project.</li>
+    <li>Delivery and invoicing details when you place an order (including business name and VAT number if applicable).</li>
+  </ul>
+  <p>The quote form on this website does not store anything: it opens your own email or WhatsApp app with the message filled in, and you decide whether to send it.</p>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>To reply to your enquiry and prepare quotes.</li>
+    <li>To process, deliver and invoice orders.</li>
+    <li>To provide technical support and warranty assistance.</li>
+  </ul>
+  <p>We do not sell your information or share it with third parties, except where needed to deliver an order (for example, a courier) or where the law requires it.</p>
+
+  <h2>Cookies</h2>
+  <p>This website does not use advertising or tracking cookies. Fonts are loaded from Google Fonts, which may record your IP address as part of serving them.</p>
+
+  <h2>Your rights</h2>
+  <p>Under POPIA you may ask to see the personal information we hold about you, ask us to correct or delete it, or object to how it is used. Email <a href={`mailto:${site.email}`}>{site.email}</a>. You may also lodge a complaint with the Information Regulator of South Africa.</p>
+</Guide>
