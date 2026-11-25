@@ -5,6 +5,7 @@ import logo from '../assets/brand/logo.png';
 import Menu from '../components/Menu.astro';
 import Footer from '../components/Footer.astro';
 import {site} from '../data/site';
+import {stripBase, withBase} from '../lib/paths';
 
 export type Crumb = {name: string; href: string};
 
@@ -22,8 +23,8 @@ interface Props {
 
 const {title, description, schema = [], crumbs = [], image = '/og-image.jpg', noindex = false, solidHeader = false} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL(image, Astro.site).href;
-const fullTitle = Astro.url.pathname === '/' ? title : `${title} | Nu-Glaze`;
+const ogImage = new URL(withBase(image), Astro.site).href;
+const fullTitle = stripBase(Astro.url.pathname) === '/' ? title : `${title} | Nu-Glaze`;
 
 const business = {
   '@context': 'https://schema.org',
@@ -50,7 +51,7 @@ const breadcrumb = crumbs.length
   ? {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [{name: 'Home', href: '/'}, ...crumbs].map((c, i) => ({'@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.href, Astro.site).href})),
+      itemListElement: [{name: 'Home', href: '/'}, ...crumbs].map((c, i) => ({'@type': 'ListItem', position: i + 1, name: c.name, item: new URL(withBase(c.href), Astro.site).href})),
     }
   : null;
 const graph = [business, website, ...(breadcrumb ? [breadcrumb] : []), ...schema];
@@ -65,7 +66,8 @@ const graph = [business, website, ...(breadcrumb ? [breadcrumb] : []), ...schema
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {/* The GitHub Pages demo stays out of search results so it never competes with nu-glaze.co.za. */}
+    {(noindex || import.meta.env.PUBLIC_DEMO) && <meta name="robots" content="noindex, follow" />}
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />

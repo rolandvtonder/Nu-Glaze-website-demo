@@ -1,6 +1,7 @@
 ---
 import {nav, secondaryNav, site} from '../data/site';
-const path = Astro.url.pathname;
+import {stripBase} from '../lib/paths';
+const path = stripBase(Astro.url.pathname);
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
 

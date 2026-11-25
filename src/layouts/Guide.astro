@@ -3,6 +3,7 @@ import type {ImageMetadata} from 'astro';
 import Base, {type Crumb} from './Base.astro';
 import PageHero, {type Line} from '../components/PageHero.astro';
 import {nav, secondaryNav, site} from '../data/site';
+import {stripBase} from '../lib/paths';
 
 /**
  * Long-form pages (installation guides, warranty, privacy…): the photo hero,
@@ -24,7 +25,7 @@ interface Props {
 const {title, description, kicker, lines, intro, image, crumbs, schema, group = 'install'} = Astro.props;
 const installLinks = [{href: '/installation/', label: 'Installation guide'}, ...nav.find((n) => n.href === '/installation/')!.children!, {href: '/faq/', label: 'Tips, tricks & FAQ'}];
 const links = group === 'install' ? installLinks : secondaryNav;
-const path = Astro.url.pathname;
+const path = stripBase(Astro.url.pathname);
 ---
 
 <Base title={title} description={description} schema={schema} crumbs={crumbs}>
